@@ -62,9 +62,9 @@ export function HomePage() {
         </motion.div>
         <motion.div
           className="hero-visual"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 40, scale: 0.985 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
           <Floating className="hero-float" distance={7} duration={7}>
             <DashboardMockup />

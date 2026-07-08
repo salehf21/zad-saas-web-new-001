@@ -327,8 +327,8 @@ main {
 }
 
 .btn:disabled {
-  cursor: wait;
-  opacity: 0.75;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .spin {
@@ -609,7 +609,12 @@ main {
   height: 600px;
   max-width: 1100px;
   overflow: hidden;
+  transition: box-shadow 320ms ease;
   width: min(100%, 1100px);
+}
+
+.dashboard-mockup:hover {
+  box-shadow: 0 28px 56px rgba(17, 24, 39, 0.18);
 }
 
 .dashboard-sidebar {
@@ -2152,6 +2157,82 @@ main {
 
 .input-toggle:hover {
   color: var(--charcoal);
+}
+
+.form-error {
+  background: var(--rose);
+  border: 1px solid rgba(255, 55, 55, 0.35);
+  border-radius: 8px;
+  color: var(--deep-red);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  padding: 12px 16px;
+}
+
+.input-error {
+  color: var(--deep-red);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.input-field-error input {
+  border-color: var(--red);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.chip:hover {
+  border-color: var(--soft-gray);
+  transform: translateY(-1px);
+}
+
+.chip-active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.step-input {
+  overflow: hidden;
+}
+
+.step-input > * {
+  margin-top: 14px;
+}
+
+.step-input .input-field {
+  max-width: 360px;
+}
+
+.onboarding-summary span {
+  color: var(--muted);
+  display: block;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .form-success {

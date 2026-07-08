@@ -3,24 +3,55 @@ import { ArrowLeft, CheckCircle2, Globe2, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { EASE } from "../components/motion";
-import { Button, Input, Logo } from "../components/ui";
+import { Button, FormErrorBanner, Input, Logo } from "../components/ui";
+import { ApiError, postJson } from "../lib/api";
+import type { FieldErrors } from "../lib/api";
 import { Link, useRouter } from "../router";
 
 export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const { navigate } = useRouter();
   const [sending, setSending] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const timer = useRef<number>();
   const isSignup = mode === "signup";
   const isForgot = mode === "forgot";
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
-  // Frontend-only demo: no real authentication. A short simulated "loading"
-  // state leads into the static onboarding flow (or the reset confirmation).
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  // Signup stores a real account request via the API, then continues into
+  // onboarding. Login and password reset stay frontend-only demos — there is
+  // no authentication system yet.
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    setError(null);
+    setFieldErrors({});
     setSending(true);
+
+    if (isSignup) {
+      try {
+        const email = String(data.get("email") ?? "");
+        await postJson("/api/signup", {
+          name: data.get("name"),
+          email,
+          restaurant: data.get("restaurant")
+        });
+        window.sessionStorage.setItem("zad-signup-email", email);
+        navigate("/onboarding");
+      } catch (err) {
+        setSending(false);
+        if (err instanceof ApiError) {
+          setError(err.message);
+          setFieldErrors(err.fieldErrors ?? {});
+        } else {
+          setError("Something went wrong — please try again.");
+        }
+      }
+      return;
+    }
+
     timer.current = window.setTimeout(() => {
       if (isForgot) {
         setSending(false);
@@ -48,7 +79,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
           <h1>{isSignup ? "Create your account." : isForgot ? "Reset password." : "Welcome back."}</h1>
           <p>
             {isSignup
-              ? "Start your free restaurant workspace."
+              ? "Request your free restaurant workspace — our team activates it right away."
               : isForgot
                 ? "We will send reset instructions."
                 : "Sign in to your dashboard."}
@@ -61,25 +92,41 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, ease: EASE }}
           >
-            <CheckCircle2 size={48} />
+            <motion.span
+              initial={{ scale: 0.4, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 320, damping: 18, delay: 0.1 }}
+            >
+              <CheckCircle2 size={48} />
+            </motion.span>
             <h2>Check your inbox</h2>
             <p>If an account exists for that email, reset instructions are on the way.</p>
           </motion.div>
         ) : (
           <form className="auth-form" onSubmit={handleSubmit}>
-            {isSignup ? <Input label="Full Name" placeholder="Your full name" name="name" required /> : null}
-            <Input label="Email address" placeholder="Email address" type="email" name="email" required />
-            {!isForgot ? (
-              <Input label="Password" placeholder="Password" type="password" name="password" required />
+            {error ? <FormErrorBanner message={error} /> : null}
+            {isSignup ? (
+              <Input label="Full Name" placeholder="Your full name" name="name" required error={fieldErrors.name} />
             ) : null}
+            <Input
+              label="Email address"
+              placeholder="Email address"
+              type="email"
+              name="email"
+              required
+              error={fieldErrors.email}
+            />
             {isSignup ? (
               <Input
-                label="Confirm Password"
-                placeholder="Confirm Password"
-                type="password"
-                name="confirm"
+                label="Restaurant name"
+                placeholder="Restaurant or cafe"
+                name="restaurant"
                 required
+                error={fieldErrors.restaurant}
               />
+            ) : null}
+            {!isSignup && !isForgot ? (
+              <Input label="Password" placeholder="Password" type="password" name="password" required />
             ) : null}
             {!isSignup && !isForgot ? (
               <div className="auth-options">

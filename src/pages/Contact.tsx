@@ -1,25 +1,46 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { FormEvent } from "react";
 import { Footer, PageShell } from "../components/layout";
 import { EASE, Reveal } from "../components/motion";
 import { FinalCta } from "../components/sections";
-import { Badge, Button, Input } from "../components/ui";
+import { Badge, Button, FormErrorBanner, Input } from "../components/ui";
+import { ApiError, postJson } from "../lib/api";
+import type { FieldErrors } from "../lib/api";
 
 type FormState = "idle" | "sending" | "sent";
 
 export function ContactPage() {
   const [state, setState] = useState<FormState>("idle");
-  const timer = useRef<number>();
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
-  // Frontend-only: simulate a short send, then show the static success state.
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
     setState("sending");
-    timer.current = window.setTimeout(() => setState("sent"), 900);
+    setError(null);
+    setFieldErrors({});
+    try {
+      await postJson("/api/contact", {
+        name: data.get("name"),
+        email: data.get("email"),
+        phone: data.get("phone"),
+        restaurant: data.get("restaurant"),
+        message: data.get("message")
+      });
+      setState("sent");
+    } catch (err) {
+      setState("idle");
+      if (err instanceof ApiError) {
+        setError(err.message);
+        setFieldErrors(err.fieldErrors ?? {});
+      } else {
+        setError("Something went wrong — please try again.");
+      }
+    }
   };
 
   return (
@@ -54,7 +75,13 @@ export function ContactPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.35, ease: EASE }}
               >
-                <CheckCircle2 size={48} />
+                <motion.span
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 18, delay: 0.1 }}
+                >
+                  <CheckCircle2 size={48} />
+                </motion.span>
                 <h2>Message sent</h2>
                 <p>Thanks — our team will contact you soon.</p>
                 <Button onClick={() => setState("idle")} tone="white">
@@ -69,12 +96,34 @@ export function ContactPage() {
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
               >
-                <Input label="Full name" placeholder="Your name" name="name" required />
-                <Input label="Restaurant name" placeholder="Restaurant or cafe" name="restaurant" required />
-                <Input label="Email address" placeholder="you@example.com" type="email" name="email" required />
+                {error ? <FormErrorBanner message={error} /> : null}
+                <Input label="Full name" placeholder="Your name" name="name" required error={fieldErrors.name} />
+                <Input
+                  label="Restaurant name"
+                  placeholder="Restaurant or cafe"
+                  name="restaurant"
+                  required
+                  error={fieldErrors.restaurant}
+                />
+                <Input
+                  label="Email address"
+                  placeholder="you@example.com"
+                  type="email"
+                  name="email"
+                  required
+                  error={fieldErrors.email}
+                />
+                <Input
+                  label="Phone (optional)"
+                  placeholder="+962 7 0000 0000"
+                  type="tel"
+                  name="phone"
+                  error={fieldErrors.phone}
+                />
                 <label>
                   Message
                   <textarea placeholder="Tell us about your restaurant" name="message" required />
+                  {fieldErrors.message ? <small className="input-error">{fieldErrors.message}</small> : null}
                 </label>
                 <Button type="submit" size="lg" disabled={state === "sending"}>
                   {state === "sending" ? (

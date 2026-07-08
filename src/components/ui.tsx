@@ -67,8 +67,8 @@ export function Button({
   const className = `btn btn-${tone} btn-${size}`;
   const interactions = {
     whileHover: disabled ? undefined : { y: -2 },
-    whileTap: disabled ? undefined : { scale: 0.97 },
-    transition: { duration: 0.15 }
+    whileTap: disabled ? undefined : { scale: 0.96 },
+    transition: { type: "spring" as const, stiffness: 420, damping: 22 }
   };
 
   if (href !== undefined) {
@@ -137,23 +137,31 @@ export function Input({
   placeholder,
   type = "text",
   name,
-  required = false
+  required = false,
+  error
 }: {
   label: string;
   placeholder: string;
   type?: string;
   name?: string;
   required?: boolean;
+  error?: string;
 }) {
   const [visible, setVisible] = useState(false);
   const isPassword = type === "password";
   const resolvedType = isPassword && visible ? "text" : type;
 
   return (
-    <label className="input-field">
+    <label className={`input-field ${error ? "input-field-error" : ""}`}>
       {label}
       <span>
-        <input type={resolvedType} placeholder={placeholder} name={name} required={required} />
+        <input
+          type={resolvedType}
+          placeholder={placeholder}
+          name={name}
+          required={required}
+          aria-invalid={error ? true : undefined}
+        />
         {isPassword ? (
           <button
             type="button"
@@ -165,6 +173,21 @@ export function Input({
           </button>
         ) : null}
       </span>
+      {error ? <small className="input-error">{error}</small> : null}
     </label>
+  );
+}
+
+export function FormErrorBanner({ message }: { message: string }) {
+  return (
+    <motion.p
+      className="form-error"
+      role="alert"
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+    >
+      {message}
+    </motion.p>
   );
 }
