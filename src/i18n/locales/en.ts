@@ -25,6 +25,7 @@ export const en = {
     pricing: "Pricing",
     impact: "Impact",
     about: "About",
+    environment: "Environment",
     primaryNav: "Primary navigation",
     mobileNav: "Mobile navigation",
     openMenu: "Open menu",
@@ -43,6 +44,7 @@ export const en = {
     linkAbout: "About",
     linkImpact: "Impact",
     linkContact: "Contact",
+    linkEnvironment: "ZAD & the Environment",
     linkStartForFree: "Start for Free",
     linkLogin: "Login",
     linkBookDemo: "Book a Demo",
@@ -506,6 +508,52 @@ export const en = {
     title: "This page is off the menu",
     sub: "The page you're looking for doesn't exist or has moved.",
     contactUs: "Contact Us"
+  },
+
+  environment: {
+    badge: "ZAD & the Environment",
+    title: "Less paper. Smarter restaurants.",
+    sub: "ZAD replaces paper-heavy restaurant operations — menus, receipts, order slips, and reports — with clean digital flows.",
+    problemEyebrow: "The Paper Problem",
+    problemTitle: "Restaurants print more than they realize",
+    problemBody: "A single restaurant prints menus, receipts, order slips, and reports every day. Small, repeated waste becomes large over months and years.",
+    problems: [
+      { title: "Printed Menus", body: "Reprinted for every price change, seasonal dish, or damaged copy." },
+      { title: "Paper Receipts", body: "Thermal paper printed for every guest, whether they want it or not." },
+      { title: "Order Slips", body: "Handwritten or printed tickets passed between the floor and the kitchen." },
+      { title: "Paper Reports", body: "End-of-day summaries printed, filed, and eventually thrown away." }
+    ],
+    helpEyebrow: "How ZAD Helps",
+    helpTitle: "Digital flows instead of daily printing",
+    helps: [
+      { title: "Digital QR Menus", body: "One QR code per table replaces printed menus entirely." },
+      { title: "Digital Receipts", body: "Guests view receipts on their phone, receive them via WhatsApp, or download a PDF." },
+      { title: "Fewer Order Slips", body: "Orders travel from the table straight to the kitchen display." },
+      { title: "One Operations Hub", body: "Orders, tables, reservations, and reports live in one dashboard." },
+      { title: "Digital Guest Notes", body: "Customer profiles and digital communication replace paper notes and cards." },
+      { title: "Instant Menu Updates", body: "Change prices and dishes in seconds — no reprinting, ever." }
+    ],
+    metricsTitle: "Impact you can measure honestly",
+    metricsBody: "We don't promise to save the planet. We remove specific, everyday paper flows — and the savings compound with every order.",
+    metrics: [
+      { value: "100%", label: "of receipts can be digitized" },
+      { value: "0", label: "reprints needed after a menu update" },
+      { value: "4", label: "daily paper flows replaced" },
+      { value: "1", label: "QR code replaces a table's printed menus" }
+    ],
+    benefitsTitle: "Good for operations, not just the environment",
+    benefits: [
+      "Lower printing costs",
+      "Faster menu updates",
+      "A cleaner guest experience",
+      "Stronger brand perception",
+      "Easier digital reporting",
+      "Operations that scale without more paper"
+    ],
+    statementEyebrow: "Our Commitment",
+    statement: "ZAD is not only a restaurant operating system. It is a step toward cleaner, smarter, and less wasteful restaurant operations across Jordan and the region.",
+    ctaTitle: "Run a cleaner restaurant with ZAD",
+    ctaBody: "Start free or book a demo — going digital takes about 10 minutes."
   },
 
   errors: {

@@ -24,6 +24,7 @@ export const tr: Messages = {
     pricing: "Fiyatlandırma",
     impact: "Etki",
     about: "Hakkımızda",
+    environment: "Çevre",
     primaryNav: "Ana gezinme",
     mobileNav: "Mobil gezinme",
     openMenu: "Menüyü aç",
@@ -42,6 +43,7 @@ export const tr: Messages = {
     linkAbout: "Hakkımızda",
     linkImpact: "Etki",
     linkContact: "İletişim",
+    linkEnvironment: "ZAD ve Çevre",
     linkStartForFree: "Ücretsiz Başlayın",
     linkLogin: "Giriş Yap",
     linkBookDemo: "Demo Talep Edin",
@@ -505,6 +507,52 @@ export const tr: Messages = {
     title: "Bu sayfa menüde yok",
     sub: "Aradığınız sayfa mevcut değil ya da taşınmış.",
     contactUs: "Bize Ulaşın"
+  },
+
+  environment: {
+    badge: "ZAD ve Çevre",
+    title: "Daha az kağıt. Daha akıllı restoranlar.",
+    sub: "ZAD; menüler, fişler, sipariş pusulaları ve raporlar gibi kağıt yoğun restoran operasyonlarını akıcı dijital süreçlerle değiştirir.",
+    problemEyebrow: "Kağıt Sorunu",
+    problemTitle: "Restoranlar fark ettiklerinden çok daha fazla baskı yapıyor",
+    problemBody: "Tek bir restoran her gün menü, fiş, sipariş pusulası ve rapor basar. Küçük ama tekrarlanan israf, aylar ve yıllar içinde büyük bir yüke dönüşür.",
+    problems: [
+      { title: "Basılı Menüler", body: "Her fiyat değişikliğinde, sezonluk yemekte veya yıpranan kopyada yeniden basılır." },
+      { title: "Kağıt Fişler", body: "İstesin ya da istemesin, her misafir için termal kağıda fiş basılır." },
+      { title: "Sipariş Pusulaları", body: "Salon ile mutfak arasında elden ele dolaşan el yazısı veya basılı fişler." },
+      { title: "Kağıt Raporlar", body: "Gün sonu özetleri basılır, dosyalanır ve sonunda çöpe gider." }
+    ],
+    helpEyebrow: "ZAD Nasıl Yardımcı Olur",
+    helpTitle: "Günlük baskı yerine dijital süreçler",
+    helps: [
+      { title: "Dijital QR Menüler", body: "Masa başına tek bir QR kod, basılı menülerin yerini tamamen alır." },
+      { title: "Dijital Fişler", body: "Misafirler fişlerini telefonlarında görüntüler, WhatsApp ile alır veya PDF olarak indirir." },
+      { title: "Daha Az Sipariş Pusulası", body: "Siparişler masadan doğrudan mutfak ekranına iletilir." },
+      { title: "Tek Operasyon Merkezi", body: "Siparişler, masalar, rezervasyonlar ve raporlar tek bir panelde yaşar." },
+      { title: "Dijital Misafir Notları", body: "Müşteri profilleri ve dijital iletişim, kağıt notların ve kartların yerini alır." },
+      { title: "Anında Menü Güncellemeleri", body: "Fiyatları ve yemekleri saniyeler içinde değiştirin — yeniden baskı asla gerekmez." }
+    ],
+    metricsTitle: "Dürüstçe ölçebileceğiniz bir etki",
+    metricsBody: "Gezegeni kurtarma sözü vermiyoruz. Belirli, günlük kağıt akışlarını ortadan kaldırıyoruz — ve tasarruf her siparişle katlanarak büyüyor.",
+    metrics: [
+      { value: "100%", label: "oranında fişler dijitalleştirilebilir" },
+      { value: "0", label: "menü güncellemesi sonrası yeniden baskı gerekir" },
+      { value: "4", label: "günlük kağıt akışının yerini dijital alır" },
+      { value: "1", label: "QR kod, bir masanın basılı menülerinin yerini alır" }
+    ],
+    benefitsTitle: "Sadece çevre için değil, operasyonlar için de iyi",
+    benefits: [
+      "Daha düşük baskı maliyetleri",
+      "Daha hızlı menü güncellemeleri",
+      "Daha temiz bir misafir deneyimi",
+      "Daha güçlü marka algısı",
+      "Daha kolay dijital raporlama",
+      "Daha fazla kağıt gerektirmeden ölçeklenen operasyonlar"
+    ],
+    statementEyebrow: "Taahhüdümüz",
+    statement: "ZAD yalnızca bir restoran işletim sistemi değildir. Ürdün ve bölge genelinde daha temiz, daha akıllı ve daha az israf eden restoran operasyonlarına doğru atılmış bir adımdır.",
+    ctaTitle: "ZAD ile daha temiz bir restoran işletin",
+    ctaBody: "Ücretsiz başlayın veya demo talep edin — dijitale geçiş yaklaşık 10 dakika sürer."
   },
 
   errors: {

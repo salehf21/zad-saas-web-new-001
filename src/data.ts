@@ -2,19 +2,23 @@ import {
   BarChart3,
   BookOpen,
   Calendar,
+  ClipboardList,
   Clock3,
   Database,
   FileText,
   Gift,
   LayoutDashboard,
+  MessageCircle,
   Monitor,
+  Printer,
   Puzzle,
   QrCode,
   Receipt,
   ShoppingCart,
   TrendingUp,
   UserCheck,
-  Users
+  Users,
+  Zap
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Messages } from "./i18n/locales/en";
@@ -28,7 +32,19 @@ export const navItems: readonly { key: keyof Messages["nav"]; href: string }[] =
   { key: "qrOrdering", href: "/qr-ordering" },
   { key: "pricing", href: "/pricing" },
   { key: "impact", href: "/impact" },
+  { key: "environment", href: "/environment" },
   { key: "about", href: "/about" }
+];
+
+export const envProblemIcons: readonly LucideIcon[] = [FileText, Receipt, ClipboardList, Printer];
+
+export const envHelpIcons: readonly LucideIcon[] = [
+  QrCode,
+  Receipt,
+  ClipboardList,
+  LayoutDashboard,
+  MessageCircle,
+  Zap
 ];
 
 export const problemIcons: readonly LucideIcon[] = [
@@ -73,6 +89,7 @@ export const footerColumns: readonly {
     links: [
       { labelKey: "linkAbout", href: "/about" },
       { labelKey: "linkImpact", href: "/impact" },
+      { labelKey: "linkEnvironment", href: "/environment" },
       { labelKey: "linkContact", href: "/contact" }
     ]
   },

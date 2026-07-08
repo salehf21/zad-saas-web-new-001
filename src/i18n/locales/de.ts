@@ -26,6 +26,7 @@ export const de: Messages = {
     pricing: "Preise",
     impact: "Wirkung",
     about: "Über uns",
+    environment: "Umwelt",
     primaryNav: "Hauptnavigation",
     mobileNav: "Mobile Navigation",
     openMenu: "Menü öffnen",
@@ -44,6 +45,7 @@ export const de: Messages = {
     linkAbout: "Über uns",
     linkImpact: "Wirkung",
     linkContact: "Kontakt",
+    linkEnvironment: "ZAD & die Umwelt",
     linkStartForFree: "Kostenlos starten",
     linkLogin: "Anmelden",
     linkBookDemo: "Demo buchen",
@@ -507,6 +509,52 @@ export const de: Messages = {
     title: "Diese Seite steht nicht auf der Karte",
     sub: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     contactUs: "Kontakt aufnehmen"
+  },
+
+  environment: {
+    badge: "ZAD & die Umwelt",
+    title: "Weniger Papier. Smartere Restaurants.",
+    sub: "ZAD ersetzt papierintensive Restaurantabläufe — Speisekarten, Belege, Bestellzettel und Berichte — durch schlanke digitale Prozesse.",
+    problemEyebrow: "Das Papierproblem",
+    problemTitle: "Restaurants drucken mehr, als ihnen bewusst ist",
+    problemBody: "Ein einzelnes Restaurant druckt täglich Speisekarten, Belege, Bestellzettel und Berichte. Kleine, wiederkehrende Verschwendung summiert sich über Monate und Jahre zu großen Mengen.",
+    problems: [
+      { title: "Gedruckte Speisekarten", body: "Neu gedruckt bei jeder Preisänderung, jedem Saisongericht oder beschädigten Exemplar." },
+      { title: "Papierbelege", body: "Thermopapier, gedruckt für jeden Gast — ob gewünscht oder nicht." },
+      { title: "Bestellzettel", body: "Handgeschriebene oder gedruckte Bons, die zwischen Servicebereich und Küche hin- und hergereicht werden." },
+      { title: "Papierberichte", body: "Tagesabschlüsse werden gedruckt, abgeheftet und irgendwann entsorgt." }
+    ],
+    helpEyebrow: "So hilft ZAD",
+    helpTitle: "Digitale Prozesse statt täglichem Drucken",
+    helps: [
+      { title: "Digitale QR-Speisekarten", body: "Ein QR-Code pro Tisch ersetzt gedruckte Speisekarten vollständig." },
+      { title: "Digitale Belege", body: "Gäste sehen Belege auf ihrem Smartphone, erhalten sie per WhatsApp oder laden sie als PDF herunter." },
+      { title: "Weniger Bestellzettel", body: "Bestellungen gelangen vom Tisch direkt auf das Küchendisplay." },
+      { title: "Eine zentrale Betriebszentrale", body: "Bestellungen, Tische, Reservierungen und Berichte — alles in einem Dashboard." },
+      { title: "Digitale Gästenotizen", body: "Kundenprofile und digitale Kommunikation ersetzen Papiernotizen und Karteikarten." },
+      { title: "Sofortige Menü-Updates", body: "Preise und Gerichte in Sekunden ändern — ganz ohne Neudruck." }
+    ],
+    metricsTitle: "Wirkung, die sich ehrlich messen lässt",
+    metricsBody: "Wir versprechen nicht, den Planeten zu retten. Wir ersetzen konkrete, alltägliche Papierprozesse — und die Einsparungen wachsen mit jeder Bestellung.",
+    metrics: [
+      { value: "100%", label: "der Belege lassen sich digitalisieren" },
+      { value: "0", label: "Neudrucke nach einer Menü-Aktualisierung" },
+      { value: "4", label: "tägliche Papierprozesse ersetzt" },
+      { value: "1", label: "QR-Code ersetzt die gedruckten Speisekarten eines Tisches" }
+    ],
+    benefitsTitle: "Gut für den Betrieb — nicht nur für die Umwelt",
+    benefits: [
+      "Geringere Druckkosten",
+      "Schnellere Menü-Updates",
+      "Ein hochwertigeres Gästeerlebnis",
+      "Stärkere Markenwahrnehmung",
+      "Einfacheres digitales Reporting",
+      "Abläufe, die ohne mehr Papier skalieren"
+    ],
+    statementEyebrow: "Unser Engagement",
+    statement: "ZAD ist mehr als ein Betriebssystem für Restaurants. Es ist ein Schritt hin zu saubereren, smarteren und ressourcenschonenderen Restaurantabläufen in Jordanien und der Region.",
+    ctaTitle: "Führen Sie Ihr Restaurant sauberer — mit ZAD",
+    ctaBody: "Starten Sie kostenlos oder buchen Sie eine Demo — der Umstieg auf digital dauert etwa 10 Minuten."
   },
 
   errors: {

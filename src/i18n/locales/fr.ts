@@ -24,6 +24,7 @@ export const fr: Messages = {
     pricing: "Tarifs",
     impact: "Impact",
     about: "À propos",
+    environment: "Environnement",
     primaryNav: "Navigation principale",
     mobileNav: "Navigation mobile",
     openMenu: "Ouvrir le menu",
@@ -42,6 +43,7 @@ export const fr: Messages = {
     linkAbout: "À propos",
     linkImpact: "Impact",
     linkContact: "Contact",
+    linkEnvironment: "ZAD et l'environnement",
     linkStartForFree: "Commencer gratuitement",
     linkLogin: "Connexion",
     linkBookDemo: "Réserver une démo",
@@ -505,6 +507,52 @@ export const fr: Messages = {
     title: "Cette page n'est pas au menu",
     sub: "La page que vous recherchez n'existe pas ou a été déplacée.",
     contactUs: "Contactez-nous"
+  },
+
+  environment: {
+    badge: "ZAD et l'environnement",
+    title: "Moins de papier. Des restaurants plus intelligents.",
+    sub: "ZAD remplace les opérations de restaurant gourmandes en papier — menus, tickets de caisse, bons de commande et rapports — par des flux numériques épurés.",
+    problemEyebrow: "Le problème du papier",
+    problemTitle: "Les restaurants impriment plus qu'ils ne le pensent",
+    problemBody: "Un seul restaurant imprime chaque jour des menus, des tickets de caisse, des bons de commande et des rapports. De petits gaspillages répétés deviennent considérables au fil des mois et des années.",
+    problems: [
+      { title: "Menus imprimés", body: "Réimprimés à chaque changement de prix, plat de saison ou exemplaire abîmé." },
+      { title: "Tickets de caisse papier", body: "Du papier thermique imprimé pour chaque client, qu'il le souhaite ou non." },
+      { title: "Bons de commande", body: "Des tickets manuscrits ou imprimés qui circulent entre la salle et la cuisine." },
+      { title: "Rapports papier", body: "Des récapitulatifs de fin de journée imprimés, classés, puis finalement jetés." }
+    ],
+    helpEyebrow: "Comment ZAD vous aide",
+    helpTitle: "Des flux numériques plutôt que des impressions quotidiennes",
+    helps: [
+      { title: "Menus QR numériques", body: "Un seul code QR par table remplace entièrement les menus imprimés." },
+      { title: "Tickets numériques", body: "Vos clients consultent leur ticket sur leur téléphone, le reçoivent via WhatsApp ou le téléchargent en PDF." },
+      { title: "Moins de bons de commande", body: "Les commandes passent directement de la table à l'écran de cuisine." },
+      { title: "Un centre d'opérations unique", body: "Commandes, tables, réservations et rapports réunis dans un seul tableau de bord." },
+      { title: "Notes clients numériques", body: "Les profils clients et la communication numérique remplacent les notes et fiches papier." },
+      { title: "Mises à jour de menu instantanées", body: "Modifiez prix et plats en quelques secondes — sans jamais réimprimer." }
+    ],
+    metricsTitle: "Un impact mesurable, en toute honnêteté",
+    metricsBody: "Nous ne promettons pas de sauver la planète. Nous éliminons des flux de papier précis et quotidiens — et les économies s'accumulent à chaque commande.",
+    metrics: [
+      { value: "100%", label: "des tickets de caisse peuvent être numérisés" },
+      { value: "0", label: "réimpression nécessaire après une mise à jour du menu" },
+      { value: "4", label: "flux de papier quotidiens remplacés" },
+      { value: "1", label: "code QR remplace les menus imprimés d'une table" }
+    ],
+    benefitsTitle: "Bon pour vos opérations, pas seulement pour l'environnement",
+    benefits: [
+      "Des coûts d'impression réduits",
+      "Des mises à jour de menu plus rapides",
+      "Une expérience client plus soignée",
+      "Une image de marque renforcée",
+      "Des rapports numériques simplifiés",
+      "Des opérations qui évoluent sans papier supplémentaire"
+    ],
+    statementEyebrow: "Notre engagement",
+    statement: "ZAD n'est pas seulement un système d'exploitation pour restaurants. C'est un pas vers des opérations de restauration plus propres, plus intelligentes et moins gaspilleuses en Jordanie et dans toute la région.",
+    ctaTitle: "Gérez un restaurant plus propre avec ZAD",
+    ctaBody: "Commencez gratuitement ou réservez une démo — passer au numérique prend environ 10 minutes."
   },
 
   errors: {

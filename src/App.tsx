@@ -7,6 +7,7 @@ import { LocaleProvider } from "./i18n";
 import { AboutPage } from "./pages/About";
 import { AuthPage } from "./pages/Auth";
 import { ContactPage } from "./pages/Contact";
+import { EnvironmentPage } from "./pages/Environment";
 import { FeaturesPage } from "./pages/Features";
 import { HomePage } from "./pages/Home";
 import { ImpactPage } from "./pages/Impact";
@@ -31,6 +32,7 @@ const marketingRoutes: Record<string, ReactElement> = {
   "/qr-ordering": <QrOrderingPage />,
   "/pricing": <PricingPage />,
   "/impact": <ImpactPage />,
+  "/environment": <EnvironmentPage />,
   "/about": <AboutPage />,
   "/contact": <ContactPage />
 };

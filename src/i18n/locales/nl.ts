@@ -24,6 +24,7 @@ export const nl: Messages = {
     pricing: "Prijzen",
     impact: "Impact",
     about: "Over ons",
+    environment: "Milieu",
     primaryNav: "Hoofdnavigatie",
     mobileNav: "Mobiele navigatie",
     openMenu: "Menu openen",
@@ -42,6 +43,7 @@ export const nl: Messages = {
     linkAbout: "Over ons",
     linkImpact: "Impact",
     linkContact: "Contact",
+    linkEnvironment: "ZAD & het milieu",
     linkStartForFree: "Start gratis",
     linkLogin: "Inloggen",
     linkBookDemo: "Boek een demo",
@@ -505,6 +507,52 @@ export const nl: Messages = {
     title: "Deze pagina staat niet op het menu",
     sub: "De pagina die je zoekt bestaat niet of is verplaatst.",
     contactUs: "Neem contact op"
+  },
+
+  environment: {
+    badge: "ZAD & het milieu",
+    title: "Minder papier. Slimmere restaurants.",
+    sub: "ZAD vervangt papierintensieve restaurantprocessen — menukaarten, bonnen, orderbriefjes en rapporten — door overzichtelijke digitale flows.",
+    problemEyebrow: "Het papierprobleem",
+    problemTitle: "Restaurants printen meer dan ze beseffen",
+    problemBody: "Eén restaurant print elke dag menukaarten, bonnen, orderbriefjes en rapporten. Kleine, terugkerende verspilling groeit over maanden en jaren uit tot iets groots.",
+    problems: [
+      { title: "Geprinte menukaarten", body: "Opnieuw geprint bij elke prijswijziging, elk seizoensgerecht of beschadigd exemplaar." },
+      { title: "Papieren bonnen", body: "Thermisch papier geprint voor elke gast, of die de bon nu wil of niet." },
+      { title: "Orderbriefjes", body: "Handgeschreven of geprinte tickets die tussen de zaal en de keuken heen en weer gaan." },
+      { title: "Papieren rapporten", body: "Dagafsluitingen die worden geprint, opgeborgen en uiteindelijk weggegooid." }
+    ],
+    helpEyebrow: "Hoe ZAD helpt",
+    helpTitle: "Digitale flows in plaats van dagelijks printen",
+    helps: [
+      { title: "Digitale QR-menu's", body: "Eén QR-code per tafel vervangt geprinte menukaarten volledig." },
+      { title: "Digitale bonnen", body: "Gasten bekijken bonnen op hun telefoon, ontvangen ze via WhatsApp of downloaden een PDF." },
+      { title: "Minder orderbriefjes", body: "Bestellingen gaan rechtstreeks van de tafel naar het keukenscherm." },
+      { title: "Eén operationele hub", body: "Bestellingen, tafels, reserveringen en rapporten leven in één dashboard." },
+      { title: "Digitale gastnotities", body: "Klantprofielen en digitale communicatie vervangen papieren notities en kaartjes." },
+      { title: "Directe menu-updates", body: "Wijzig prijzen en gerechten in seconden — zonder ooit opnieuw te printen." }
+    ],
+    metricsTitle: "Impact die je eerlijk kunt meten",
+    metricsBody: "We beloven niet de planeet te redden. We vervangen concrete, dagelijkse papierstromen — en de besparing groeit met elke bestelling.",
+    metrics: [
+      { value: "100%", label: "van de bonnen kan digitaal" },
+      { value: "0", label: "keer opnieuw printen na een menu-update" },
+      { value: "4", label: "dagelijkse papierstromen vervangen" },
+      { value: "1", label: "QR-code vervangt de geprinte menukaarten van een tafel" }
+    ],
+    benefitsTitle: "Goed voor je operatie, niet alleen voor het milieu",
+    benefits: [
+      "Lagere printkosten",
+      "Snellere menu-updates",
+      "Een verzorgdere gastervaring",
+      "Een sterker merkimago",
+      "Eenvoudiger digitaal rapporteren",
+      "Een operatie die schaalt zonder extra papier"
+    ],
+    statementEyebrow: "Onze belofte",
+    statement: "ZAD is meer dan een besturingssysteem voor restaurants. Het is een stap naar schonere, slimmere restaurantprocessen met minder verspilling, in Jordanië en de hele regio.",
+    ctaTitle: "Run een schoner restaurant met ZAD",
+    ctaBody: "Start gratis of boek een demo — digitaal gaan duurt ongeveer 10 minuten."
   },
 
   errors: {

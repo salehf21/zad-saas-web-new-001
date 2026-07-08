@@ -24,6 +24,7 @@ export const pt: Messages = {
     pricing: "Preços",
     impact: "Impacto",
     about: "Sobre",
+    environment: "Meio ambiente",
     primaryNav: "Navegação principal",
     mobileNav: "Navegação móvel",
     openMenu: "Abrir menu",
@@ -42,6 +43,7 @@ export const pt: Messages = {
     linkAbout: "Sobre",
     linkImpact: "Impacto",
     linkContact: "Contato",
+    linkEnvironment: "ZAD e o meio ambiente",
     linkStartForFree: "Comece grátis",
     linkLogin: "Entrar",
     linkBookDemo: "Agendar uma demo",
@@ -505,6 +507,52 @@ export const pt: Messages = {
     title: "Esta página está fora do menu",
     sub: "A página que procura não existe ou foi movida.",
     contactUs: "Fale conosco"
+  },
+
+  environment: {
+    badge: "ZAD e o meio ambiente",
+    title: "Menos papel. Restaurantes mais inteligentes.",
+    sub: "A ZAD substitui operações de restaurante carregadas de papel — menus, recibos, comandas e relatórios — por fluxos digitais limpos.",
+    problemEyebrow: "O problema do papel",
+    problemTitle: "Restaurantes imprimem mais do que imaginam",
+    problemBody: "Um único restaurante imprime menus, recibos, comandas e relatórios todos os dias. Pequenos desperdícios repetidos tornam-se grandes ao longo de meses e anos.",
+    problems: [
+      { title: "Menus impressos", body: "Reimpressos a cada mudança de preço, prato sazonal ou cópia danificada." },
+      { title: "Recibos em papel", body: "Papel térmico impresso para cada cliente, queira ele ou não." },
+      { title: "Comandas", body: "Tickets escritos à mão ou impressos que circulam entre o salão e a cozinha." },
+      { title: "Relatórios em papel", body: "Resumos de fim de dia impressos, arquivados e, no fim, descartados." }
+    ],
+    helpEyebrow: "Como a ZAD ajuda",
+    helpTitle: "Fluxos digitais em vez de impressões diárias",
+    helps: [
+      { title: "Menus digitais por QR", body: "Um código QR por mesa substitui por completo os menus impressos." },
+      { title: "Recibos digitais", body: "Os clientes veem o recibo no celular, recebem por WhatsApp ou baixam em PDF." },
+      { title: "Menos comandas", body: "Os pedidos vão da mesa direto para a tela da cozinha." },
+      { title: "Um único hub de operações", body: "Pedidos, mesas, reservas e relatórios vivem em um só painel." },
+      { title: "Notas de clientes digitais", body: "Perfis de clientes e comunicação digital substituem anotações e cartões em papel." },
+      { title: "Atualizações de menu instantâneas", body: "Altere preços e pratos em segundos — sem nunca reimprimir." }
+    ],
+    metricsTitle: "Impacto que você pode medir com honestidade",
+    metricsBody: "Não prometemos salvar o planeta. Eliminamos fluxos de papel específicos do dia a dia — e a economia se multiplica a cada pedido.",
+    metrics: [
+      { value: "100%", label: "dos recibos podem ser digitalizados" },
+      { value: "0", label: "reimpressões necessárias após atualizar o menu" },
+      { value: "4", label: "fluxos diários de papel substituídos" },
+      { value: "1", label: "código QR substitui os menus impressos de uma mesa" }
+    ],
+    benefitsTitle: "Bom para a operação, não só para o meio ambiente",
+    benefits: [
+      "Custos de impressão menores",
+      "Atualizações de menu mais rápidas",
+      "Uma experiência mais limpa para o cliente",
+      "Percepção de marca mais forte",
+      "Relatórios digitais mais fáceis",
+      "Operações que escalam sem mais papel"
+    ],
+    statementEyebrow: "O nosso compromisso",
+    statement: "A ZAD não é apenas um sistema operacional para restaurantes. É um passo rumo a operações mais limpas, mais inteligentes e com menos desperdício na Jordânia e em toda a região.",
+    ctaTitle: "Opere um restaurante mais limpo com a ZAD",
+    ctaBody: "Comece grátis ou agende uma demo — a transição para o digital leva cerca de 10 minutos."
   },
 
   errors: {

@@ -24,6 +24,7 @@ export const it: Messages = {
     pricing: "Prezzi",
     impact: "Impatto",
     about: "Chi siamo",
+    environment: "Ambiente",
     primaryNav: "Navigazione principale",
     mobileNav: "Navigazione mobile",
     openMenu: "Apri il menu",
@@ -42,6 +43,7 @@ export const it: Messages = {
     linkAbout: "Chi siamo",
     linkImpact: "Impatto",
     linkContact: "Contatti",
+    linkEnvironment: "ZAD e l'ambiente",
     linkStartForFree: "Inizia gratis",
     linkLogin: "Accedi",
     linkBookDemo: "Prenota una demo",
@@ -505,6 +507,52 @@ export const it: Messages = {
     title: "Questa pagina non è nel menù",
     sub: "La pagina che cerchi non esiste o è stata spostata.",
     contactUs: "Contattaci"
+  },
+
+  environment: {
+    badge: "ZAD e l'ambiente",
+    title: "Meno carta. Ristoranti più intelligenti.",
+    sub: "ZAD sostituisce le operazioni cartacee del ristorante — menù, scontrini, comande e report — con flussi digitali puliti.",
+    problemEyebrow: "Il problema della carta",
+    problemTitle: "I ristoranti stampano più di quanto pensino",
+    problemBody: "Un singolo ristorante stampa menù, scontrini, comande e report ogni giorno. Piccoli sprechi ripetuti diventano enormi nel corso di mesi e anni.",
+    problems: [
+      { title: "Menù stampati", body: "Ristampati a ogni cambio di prezzo, piatto stagionale o copia rovinata." },
+      { title: "Scontrini cartacei", body: "Carta termica stampata per ogni ospite, che la voglia o no." },
+      { title: "Comande cartacee", body: "Ticket scritti a mano o stampati che passano dalla sala alla cucina." },
+      { title: "Report cartacei", body: "Riepiloghi di fine giornata stampati, archiviati e infine gettati via." }
+    ],
+    helpEyebrow: "Come ZAD ti aiuta",
+    helpTitle: "Flussi digitali al posto delle stampe quotidiane",
+    helps: [
+      { title: "Menù digitali con QR", body: "Un solo codice QR per tavolo sostituisce completamente i menù stampati." },
+      { title: "Scontrini digitali", body: "Gli ospiti visualizzano lo scontrino sul telefono, lo ricevono via WhatsApp o lo scaricano in PDF." },
+      { title: "Meno comande cartacee", body: "Gli ordini viaggiano dal tavolo direttamente al display della cucina." },
+      { title: "Un unico hub operativo", body: "Ordini, tavoli, prenotazioni e report vivono in un'unica dashboard." },
+      { title: "Note digitali sugli ospiti", body: "Profili cliente e comunicazione digitale sostituiscono appunti e tessere di carta." },
+      { title: "Menù aggiornato all'istante", body: "Cambia prezzi e piatti in pochi secondi — senza mai ristampare." }
+    ],
+    metricsTitle: "Un impatto che puoi misurare con onestà",
+    metricsBody: "Non promettiamo di salvare il pianeta. Eliminiamo flussi di carta specifici e quotidiani — e il risparmio cresce a ogni ordine.",
+    metrics: [
+      { value: "100%", label: "degli scontrini può essere digitalizzato" },
+      { value: "0", label: "ristampe necessarie dopo un aggiornamento del menù" },
+      { value: "4", label: "flussi di carta quotidiani sostituiti" },
+      { value: "1", label: "codice QR sostituisce i menù stampati di un tavolo" }
+    ],
+    benefitsTitle: "Un vantaggio per l'operatività, non solo per l'ambiente",
+    benefits: [
+      "Costi di stampa più bassi",
+      "Aggiornamenti del menù più rapidi",
+      "Un'esperienza più curata per gli ospiti",
+      "Un'immagine del brand più forte",
+      "Report digitali più semplici",
+      "Un'operatività che cresce senza più carta"
+    ],
+    statementEyebrow: "Il nostro impegno",
+    statement: "ZAD non è solo un sistema operativo per ristoranti. È un passo verso un'operatività più pulita, più intelligente e con meno sprechi per i ristoranti della Giordania e di tutta la regione.",
+    ctaTitle: "Gestisci un ristorante più pulito con ZAD",
+    ctaBody: "Inizia gratis o prenota una demo — passare al digitale richiede circa 10 minuti."
   },
 
   errors: {
