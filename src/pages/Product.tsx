@@ -10,71 +10,60 @@ import {
 import { Reveal } from "../components/motion";
 import { FinalCta, SplitSection } from "../components/sections";
 import { Badge, Button, SectionHeader } from "../components/ui";
+import { useI18n } from "../i18n";
 
 export function ProductPage() {
+  const { m } = useI18n();
   return (
     <PageShell>
       <section className="hero product-hero">
         <Reveal className="hero-copy">
-          <Badge>Restaurant Dashboard</Badge>
-          <h1>The command center for your restaurant</h1>
-          <p>Orders, tables, reservations, customers, menu, analytics — in one clean dashboard.</p>
-          <Button href="/signup">Try for Free</Button>
+          <Badge>{m.product.badge}</Badge>
+          <h1>{m.product.title}</h1>
+          <p>{m.product.sub}</p>
+          <Button href="/signup">{m.common.tryForFree}</Button>
         </Reveal>
         <Reveal className="hero-visual" delay={0.15} y={36}>
-          <DashboardMockup compact title="The Burger House" />
+          <DashboardMockup compact title={m.mockups.burgerHouse} />
         </Reveal>
       </section>
 
       <SplitSection
-        eyebrow="Kitchen Display"
-        title="Live orders from every table"
-        body="Kitchen staff see new orders instantly with sound alerts, table context, and one-click status tracking."
+        eyebrow={m.product.kitchen.eyebrow}
+        title={m.product.kitchen.title}
+        body={m.product.kitchen.body}
         visual={<KitchenPanel />}
         reverse
-        bullets={["Real-time updates", "Status tracking", "Table context"]}
+        bullets={m.product.kitchen.bullets}
       />
 
       <SplitSection
-        eyebrow="Reservations"
-        title="Never miss a booking"
-        body="Digital reservation logs, guest history, automated confirmations, and waiting-list management keep the floor under control."
+        eyebrow={m.product.reservations.eyebrow}
+        title={m.product.reservations.title}
+        body={m.product.reservations.body}
         visual={<ReservationPanel />}
-        bullets={[
-          "Digital reservation log",
-          "Automated SMS confirmations",
-          "Guest history and allergy tracking",
-          "Google and social booking links"
-        ]}
+        bullets={m.product.reservations.bullets}
       />
 
       <section className="section section-gray table-section">
-        <SectionHeader eyebrow="Table Map" title="Full visibility at a glance" align="left" />
+        <SectionHeader eyebrow={m.product.tableMapEyebrow} title={m.product.tableMapTitle} align="left" />
         <TableMap />
       </section>
 
       <SplitSection
-        eyebrow="Menu Builder"
-        title="Update anything, anytime"
-        body="Instant updates across QR and tablets, categories, photo-rich items, spicy tags, and dietary markers."
+        eyebrow={m.product.menuBuilder.eyebrow}
+        title={m.product.menuBuilder.title}
+        body={m.product.menuBuilder.body}
         visual={<MenuBuilder />}
-        bullets={[
-          "Manage seasonal availability",
-          "Daily special highlights and tags",
-          "Photo-rich menu descriptions",
-          "Price adjustments by time of day"
-        ]}
+        bullets={m.product.menuBuilder.bullets}
       />
 
       <section className="section section-gray analytics-section">
-        <SectionHeader eyebrow="Analytics" title="Data that drives decisions" align="left" />
+        <SectionHeader eyebrow={m.product.analyticsEyebrow} title={m.product.analyticsTitle} align="left" />
         <AnalyticsPanel />
       </section>
 
-      <FinalCta
-        title="Start managing your restaurant smarter"
-        body="Join thousands of restaurant owners using ZAD to streamline their operations and increase revenue."
-      />
+      <FinalCta title={m.product.ctaTitle} body={m.product.ctaBody} />
       <Footer />
     </PageShell>
   );

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
+import { useI18n } from "../i18n";
 import { useRouter } from "../router";
 import { Reveal } from "./motion";
 
@@ -18,11 +19,12 @@ export function Logo({
   compact?: boolean;
 }) {
   const { navigate } = useRouter();
+  const { m } = useI18n();
   return (
     <a
       className={`logo ${compact ? "logo-compact" : ""}`}
       href="/"
-      aria-label="ZAD home"
+      aria-label={m.common.zadHome}
       onClick={(event) => {
         event.preventDefault();
         navigate("/");
@@ -148,6 +150,7 @@ export function Input({
   error?: string;
 }) {
   const [visible, setVisible] = useState(false);
+  const { m } = useI18n();
   const isPassword = type === "password";
   const resolvedType = isPassword && visible ? "text" : type;
 
@@ -166,7 +169,7 @@ export function Input({
           <button
             type="button"
             className="input-toggle"
-            aria-label={visible ? "Hide password" : "Show password"}
+            aria-label={visible ? m.auth.hidePassword : m.auth.showPassword}
             onClick={() => setVisible((current) => !current)}
           >
             {visible ? <EyeOff size={20} /> : <Eye size={20} />}

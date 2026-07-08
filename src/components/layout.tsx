@@ -1,14 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Globe2, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { footerColumns, navItems } from "../data";
+import { footerColumns, navItems, socialLinks } from "../data";
+import { LOCALES, useI18n } from "../i18n";
 import { Link, useRouter } from "../router";
 import { EASE } from "./motion";
 import { Button, Logo } from "./ui";
 
 export function Navbar() {
   const { path } = useRouter();
+  const { m } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,7 +40,7 @@ export function Navbar() {
       transition={{ duration: 0.5, ease: EASE }}
     >
       <Logo />
-      <nav className="nav-links" aria-label="Primary navigation">
+      <nav className="nav-links" aria-label={m.nav.primaryNav}>
         {navItems.map((item) => (
           <Link
             href={item.href}
@@ -46,21 +48,21 @@ export function Navbar() {
             className={path === item.href ? "nav-link-active" : ""}
             aria-current={path === item.href ? "page" : undefined}
           >
-            {item.label}
+            {m.nav[item.key]}
           </Link>
         ))}
       </nav>
       <div className="nav-actions">
         <Button href="/login" tone="ghost" size="sm">
-          Login
+          {m.common.login}
         </Button>
         <Button href="/signup" size="sm">
-          Start for Free
+          {m.common.startForFree}
         </Button>
       </div>
       <button
         className="mobile-menu"
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-label={menuOpen ? m.nav.closeMenu : m.nav.openMenu}
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((open) => !open)}
       >
@@ -70,7 +72,7 @@ export function Navbar() {
         {menuOpen ? (
           <motion.nav
             className="mobile-nav"
-            aria-label="Mobile navigation"
+            aria-label={m.nav.mobileNav}
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -93,21 +95,18 @@ export function Navbar() {
                     visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: EASE } }
                   }}
                 >
-                  <Link
-                    href={item.href}
-                    className={path === item.href ? "nav-link-active" : ""}
-                  >
-                    {item.label}
+                  <Link href={item.href} className={path === item.href ? "nav-link-active" : ""}>
+                    {m.nav[item.key]}
                   </Link>
                 </motion.div>
               ))}
             </motion.div>
             <div className="mobile-nav-actions">
               <Button href="/login" tone="white" size="lg">
-                Login
+                {m.common.login}
               </Button>
               <Button href="/signup" size="lg">
-                Start for Free
+                {m.common.startForFree}
               </Button>
             </div>
           </motion.nav>
@@ -117,38 +116,65 @@ export function Navbar() {
   );
 }
 
+function LanguageSwitcher() {
+  const { m, locale, setLocale } = useI18n();
+  return (
+    <div className="footer-lang" role="group" aria-label={m.footer.language}>
+      <span className="footer-lang-label">
+        <Globe2 size={16} /> {m.footer.language}
+      </span>
+      <div className="footer-lang-options">
+        {LOCALES.map((entry) => (
+          <button
+            type="button"
+            key={entry.code}
+            lang={entry.code}
+            className={`footer-lang-pill ${entry.code === locale ? "footer-lang-active" : ""}`}
+            aria-pressed={entry.code === locale}
+            onClick={() => setLocale(entry.code)}
+          >
+            {entry.nativeName}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Footer({ compact = false }: { compact?: boolean }) {
+  const { m } = useI18n();
   return (
     <footer className={`footer ${compact ? "footer-compact" : ""}`}>
       <div className="footer-main">
         <div className="footer-brand">
           <Logo variant="combined" dark />
-          <p>
-            The complete digital operating system for modern restaurants, cafes, and lounges.
-          </p>
+          <p>{m.footer.blurb}</p>
         </div>
         <div className="footer-links">
           {footerColumns.map((column) => (
-            <div className="footer-col" key={column.title}>
-              <strong>{column.title}</strong>
-              {column.links.map((link) =>
-                link.href.startsWith("/") ? (
-                  <Link href={link.href} key={link.label}>
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a href={link.href} target="_blank" rel="noreferrer" key={link.label}>
-                    {link.label}
-                  </a>
-                )
-              )}
+            <div className="footer-col" key={column.titleKey}>
+              <strong>{m.footer[column.titleKey]}</strong>
+              {column.links.map((link) => (
+                <Link href={link.href} key={link.labelKey}>
+                  {m.footer[link.labelKey]}
+                </Link>
+              ))}
             </div>
           ))}
+          <div className="footer-col">
+            <strong>{m.footer.colSocial}</strong>
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" rel="noreferrer" key={link.label}>
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
+      <LanguageSwitcher />
       <div className="footer-bottom">
-        <span>© 2026 ZAD. All rights reserved.</span>
-        <span>Built in Amman, Jordan</span>
+        <span>{m.footer.copyright}</span>
+        <span>{m.footer.builtIn}</span>
       </div>
     </footer>
   );

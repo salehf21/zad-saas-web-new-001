@@ -1,7 +1,9 @@
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import type { ReactElement } from "react";
+import { LanguagePopup } from "./components/LanguagePopup";
 import { Navbar } from "./components/layout";
 import { EASE } from "./components/motion";
+import { LocaleProvider } from "./i18n";
 import { AboutPage } from "./pages/About";
 import { AuthPage } from "./pages/Auth";
 import { ContactPage } from "./pages/Contact";
@@ -64,9 +66,12 @@ function Routes() {
 function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <RouterProvider>
-        <Routes />
-      </RouterProvider>
+      <LocaleProvider>
+        <RouterProvider>
+          <LanguagePopup />
+          <Routes />
+        </RouterProvider>
+      </LocaleProvider>
     </MotionConfig>
   );
 }

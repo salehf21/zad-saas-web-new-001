@@ -6,7 +6,8 @@ import type { FieldErrors } from "../validation.js";
 function badRequest(res: Response, errors: FieldErrors) {
   res.status(400).json({
     ok: false,
-    error: "Please fix the highlighted fields and try again.",
+    code: "validation",
+    error: "Validation failed.",
     fieldErrors: errors
   });
 }

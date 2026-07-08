@@ -3,39 +3,30 @@ import { DashboardMockup, MissionGraphic } from "../components/mockups";
 import { Reveal } from "../components/motion";
 import { FinalCta, SplitSection } from "../components/sections";
 import { Badge } from "../components/ui";
+import { useI18n } from "../i18n";
 
 export function AboutPage() {
+  const { m } = useI18n();
   return (
     <PageShell>
       <section className="hero about-hero">
         <Reveal className="hero-copy">
-          <Badge>About ZAD</Badge>
-          <h1>Built for modern restaurants in the region and beyond</h1>
-          <p>
-            We believe powerful restaurant software should be simple to start, affordable to keep,
-            and respectful of how real teams work.
-          </p>
+          <Badge>{m.about.badge}</Badge>
+          <h1>{m.about.title}</h1>
+          <p>{m.about.sub}</p>
         </Reveal>
         <Reveal className="hero-visual" delay={0.15} y={36}>
-          <DashboardMockup compact title="ZAD Restaurant OS" />
+          <DashboardMockup compact title={m.mockups.zadRestaurantOs} />
         </Reveal>
       </section>
       <SplitSection
-        eyebrow="Mission"
-        title="Give every restaurant an operating system"
-        body="From reservation to digital receipt, ZAD connects the customer journey with back-of-house control."
+        eyebrow={m.about.mission.eyebrow}
+        title={m.about.mission.title}
+        body={m.about.mission.body}
         visual={<MissionGraphic />}
-        bullets={[
-          "Free to start",
-          "Quick setup in 10 minutes",
-          "Arabic and English by design",
-          "Built in Amman, Jordan"
-        ]}
+        bullets={m.about.mission.bullets}
       />
-      <FinalCta
-        title="Start for free and grow with precision"
-        body="Download. Set up. Start. ZAD keeps the first step simple."
-      />
+      <FinalCta title={m.about.ctaTitle} body={m.about.ctaBody} />
       <Footer />
     </PageShell>
   );

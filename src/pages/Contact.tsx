@@ -6,23 +6,21 @@ import { Footer, PageShell } from "../components/layout";
 import { EASE, Reveal } from "../components/motion";
 import { FinalCta } from "../components/sections";
 import { Badge, Button, FormErrorBanner, Input } from "../components/ui";
-import { ApiError, postJson } from "../lib/api";
-import type { FieldErrors } from "../lib/api";
+import { useI18n } from "../i18n";
+import { ApiError, bannerMessage, fieldMessage, postJson } from "../lib/api";
 
 type FormState = "idle" | "sending" | "sent";
 
 export function ContactPage() {
+  const { m } = useI18n();
   const [state, setState] = useState<FormState>("idle");
-  const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [apiError, setApiError] = useState<ApiError | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
+    const data = new FormData(event.currentTarget);
     setState("sending");
-    setError(null);
-    setFieldErrors({});
+    setApiError(null);
     try {
       await postJson("/api/contact", {
         name: data.get("name"),
@@ -34,12 +32,7 @@ export function ContactPage() {
       setState("sent");
     } catch (err) {
       setState("idle");
-      if (err instanceof ApiError) {
-        setError(err.message);
-        setFieldErrors(err.fieldErrors ?? {});
-      } else {
-        setError("Something went wrong — please try again.");
-      }
+      setApiError(err instanceof ApiError ? err : new ApiError("generic"));
     }
   };
 
@@ -47,12 +40,9 @@ export function ContactPage() {
     <PageShell>
       <section className="contact-page">
         <Reveal className="contact-copy">
-          <Badge>Contact</Badge>
-          <h1>Let us help you set up your restaurant</h1>
-          <p>
-            Tell us what you need and the ZAD team will help you launch your digital restaurant
-            workflow.
-          </p>
+          <Badge>{m.contact.badge}</Badge>
+          <h1>{m.contact.title}</h1>
+          <p>{m.contact.sub}</p>
           <div className="contact-cards">
             <span>
               <Mail size={18} /> hello@zad-os.com
@@ -61,7 +51,7 @@ export function ContactPage() {
               <Phone size={18} /> +962 6 000 0000
             </span>
             <span>
-              <MapPin size={18} /> Amman, Jordan
+              <MapPin size={18} /> {m.contact.location}
             </span>
           </div>
         </Reveal>
@@ -82,10 +72,10 @@ export function ContactPage() {
                 >
                   <CheckCircle2 size={48} />
                 </motion.span>
-                <h2>Message sent</h2>
-                <p>Thanks — our team will contact you soon.</p>
+                <h2>{m.contact.successTitle}</h2>
+                <p>{m.contact.successBody}</p>
                 <Button onClick={() => setState("idle")} tone="white">
-                  Send another message
+                  {m.contact.sendAnother}
                 </Button>
               </motion.div>
             ) : (
@@ -96,42 +86,50 @@ export function ContactPage() {
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.25, ease: EASE }}
               >
-                {error ? <FormErrorBanner message={error} /> : null}
-                <Input label="Full name" placeholder="Your name" name="name" required error={fieldErrors.name} />
+                {apiError ? <FormErrorBanner message={bannerMessage(apiError, m)} /> : null}
                 <Input
-                  label="Restaurant name"
-                  placeholder="Restaurant or cafe"
-                  name="restaurant"
+                  label={m.contact.nameLabel}
+                  placeholder={m.contact.namePlaceholder}
+                  name="name"
                   required
-                  error={fieldErrors.restaurant}
+                  error={fieldMessage("name", apiError, m)}
                 />
                 <Input
-                  label="Email address"
-                  placeholder="you@example.com"
+                  label={m.contact.restaurantLabel}
+                  placeholder={m.contact.restaurantPlaceholder}
+                  name="restaurant"
+                  required
+                  error={fieldMessage("restaurant", apiError, m)}
+                />
+                <Input
+                  label={m.contact.emailLabel}
+                  placeholder={m.contact.emailPlaceholder}
                   type="email"
                   name="email"
                   required
-                  error={fieldErrors.email}
+                  error={fieldMessage("email", apiError, m)}
                 />
                 <Input
-                  label="Phone (optional)"
-                  placeholder="+962 7 0000 0000"
+                  label={m.contact.phoneLabel}
+                  placeholder={m.contact.phonePlaceholder}
                   type="tel"
                   name="phone"
-                  error={fieldErrors.phone}
+                  error={fieldMessage("phone", apiError, m)}
                 />
                 <label>
-                  Message
-                  <textarea placeholder="Tell us about your restaurant" name="message" required />
-                  {fieldErrors.message ? <small className="input-error">{fieldErrors.message}</small> : null}
+                  {m.contact.messageLabel}
+                  <textarea placeholder={m.contact.messagePlaceholder} name="message" required />
+                  {fieldMessage("message", apiError, m) ? (
+                    <small className="input-error">{fieldMessage("message", apiError, m)}</small>
+                  ) : null}
                 </label>
                 <Button type="submit" size="lg" disabled={state === "sending"}>
                   {state === "sending" ? (
                     <>
-                      <Loader2 size={18} className="spin" /> Sending…
+                      <Loader2 size={18} className="spin" /> {m.common.sending}
                     </>
                   ) : (
-                    "Send Message"
+                    m.contact.send
                   )}
                 </Button>
               </motion.form>
@@ -141,21 +139,15 @@ export function ContactPage() {
       </section>
       <section className="section section-gray pricing-faq">
         <div className="pricing-faq-grid">
-          {[
-            ["How fast can we start?", "You can register your account and build your digital menu in under 10 minutes."],
-            ["Is there a setup fee?", "Absolutely none. Getting started with ZAD Restaurant OS is completely free."]
-          ].map(([question, answer]) => (
-            <article key={question}>
-              <h3>{question}</h3>
-              <p>{answer}</p>
+          {m.contact.faqs.map((faq) => (
+            <article key={faq.q}>
+              <h3>{faq.q}</h3>
+              <p>{faq.a}</p>
             </article>
           ))}
         </div>
       </section>
-      <FinalCta
-        title="Start free or talk to our team"
-        body="Transform your physical restaurant into a fully automated digital enterprise starting today."
-      />
+      <FinalCta title={m.contact.ctaTitle} body={m.contact.ctaBody} />
       <Footer compact />
     </PageShell>
   );

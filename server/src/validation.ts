@@ -1,4 +1,7 @@
-export type FieldErrors = Record<string, string>;
+// Field errors are stable machine codes; the frontend maps them to localized
+// user-facing messages in the active language.
+export type FieldErrorCode = "required" | "too_long" | "invalid" | "range" | "choice";
+export type FieldErrors = Record<string, FieldErrorCode>;
 
 export type ValidationResult<T> =
   | { ok: true; value: T }
@@ -15,18 +18,12 @@ function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function requireText(
-  errors: FieldErrors,
-  field: string,
-  value: unknown,
-  label: string,
-  maxLength: number
-): string {
+function requireText(errors: FieldErrors, field: string, value: unknown, maxLength: number): string {
   const cleaned = text(value);
   if (!cleaned) {
-    errors[field] = `${label} is required.`;
+    errors[field] = "required";
   } else if (cleaned.length > maxLength) {
-    errors[field] = `${label} must be at most ${maxLength} characters.`;
+    errors[field] = "too_long";
   }
   return cleaned;
 }
@@ -43,17 +40,17 @@ export function validateContact(body: unknown): ValidationResult<ContactInput> {
   const record = asRecord(body);
   const errors: FieldErrors = {};
 
-  const name = requireText(errors, "name", record.name, "Name", 120);
-  const email = requireText(errors, "email", record.email, "Email", 254);
-  const restaurant = requireText(errors, "restaurant", record.restaurant, "Restaurant name", 160);
-  const message = requireText(errors, "message", record.message, "Message", 4000);
+  const name = requireText(errors, "name", record.name, 120);
+  const email = requireText(errors, "email", record.email, 254);
+  const restaurant = requireText(errors, "restaurant", record.restaurant, 160);
+  const message = requireText(errors, "message", record.message, 4000);
   const phone = text(record.phone);
 
   if (email && !EMAIL_PATTERN.test(email)) {
-    errors.email = "Enter a valid email address.";
+    errors.email = "invalid";
   }
   if (phone && !PHONE_PATTERN.test(phone)) {
-    errors.phone = "Enter a valid phone number.";
+    errors.phone = "invalid";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -72,12 +69,12 @@ export function validateSignup(body: unknown): ValidationResult<SignupInput> {
   const record = asRecord(body);
   const errors: FieldErrors = {};
 
-  const name = requireText(errors, "name", record.name, "Full name", 120);
-  const email = requireText(errors, "email", record.email, "Email", 254);
-  const restaurant = requireText(errors, "restaurant", record.restaurant, "Restaurant name", 160);
+  const name = requireText(errors, "name", record.name, 120);
+  const email = requireText(errors, "email", record.email, 254);
+  const restaurant = requireText(errors, "restaurant", record.restaurant, 160);
 
   if (email && !EMAIL_PATTERN.test(email)) {
-    errors.email = "Enter a valid email address.";
+    errors.email = "invalid";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -98,24 +95,24 @@ export function validateOnboarding(body: unknown): ValidationResult<OnboardingIn
   const record = asRecord(body);
   const errors: FieldErrors = {};
 
-  const restaurantName = requireText(errors, "restaurantName", record.restaurantName, "Restaurant name", 160);
+  const restaurantName = requireText(errors, "restaurantName", record.restaurantName, 160);
   const email = text(record.email);
   if (email && !EMAIL_PATTERN.test(email)) {
-    errors.email = "Enter a valid email address.";
+    errors.email = "invalid";
   }
 
   const menuSize = record.menuSize;
   if (menuSize !== "small" && menuSize !== "medium" && menuSize !== "large") {
-    errors.menuSize = "Choose a menu size.";
+    errors.menuSize = "choice";
   }
 
   const tableCount = Number(record.tableCount);
   if (!Number.isInteger(tableCount) || tableCount < 1 || tableCount > 500) {
-    errors.tableCount = "Table count must be between 1 and 500.";
+    errors.tableCount = "range";
   }
 
   if (typeof record.hasKitchenDisplay !== "boolean") {
-    errors.hasKitchenDisplay = "Tell us if you have a kitchen display.";
+    errors.hasKitchenDisplay = "choice";
   }
 
   if (Object.keys(errors).length > 0) {

@@ -14,46 +14,43 @@ import {
   Testimonials
 } from "../components/sections";
 import { Badge, Button, SectionHeader } from "../components/ui";
-import { featureCards, journeySteps, problemCards, solutionItems } from "../data";
+import { problemIcons } from "../data";
+import { useI18n } from "../i18n";
 
 export function HomePage() {
+  const { m } = useI18n();
   return (
     <PageShell>
       <section className="hero home-hero">
-        <motion.div
-          className="hero-copy"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.div className="hero-copy" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
-            <Badge>Restaurant Operating System</Badge>
+            <Badge>{m.home.badge}</Badge>
           </motion.div>
           <motion.h1 className="desktop-title" variants={fadeUp}>
-            Run your restaurant from one digital operating system
+            {m.home.titleDesktop}
           </motion.h1>
           <motion.h1 className="mobile-title" variants={fadeUp}>
-            The Restaurant Operating System
+            {m.home.titleMobile}
           </motion.h1>
           <motion.p className="desktop-title" variants={fadeUp}>
-            QR ordering, menus, reservations, tables, loyalty, and analytics — all in one place.
+            {m.home.subDesktop}
           </motion.p>
           <motion.p className="mobile-title" variants={fadeUp}>
-            QR ordering, tables, loyalty, and receipts — all in ZAD.
+            {m.home.subMobile}
           </motion.p>
           <motion.div className="hero-actions" variants={fadeUp}>
             <Button href="/signup" size="lg">
-              Start for Free
+              {m.common.startForFree}
             </Button>
             <Button href="/product" tone="white" size="lg">
-              View Dashboard
+              {m.common.viewDashboard}
             </Button>
           </motion.div>
           <motion.p className="mobile-setup-line" variants={fadeUp}>
-            Download. Set up. Start.
+            {m.home.setupLine}
           </motion.p>
           <motion.div className="hero-proof" variants={fadeUp}>
-            {["No app required", "Free forever", "Built for restaurants & cafes"].map((item) => (
+            {m.home.proof.map((item) => (
               <span key={item}>
                 <Check size={14} /> {item}
               </span>
@@ -76,7 +73,7 @@ export function HomePage() {
       <EasySetupSection />
 
       <section className="section section-gray problem-section">
-        <SectionHeader eyebrow="The Problem" title="Running a restaurant is harder than it should be" />
+        <SectionHeader eyebrow={m.home.problemEyebrow} title={m.home.problemTitle} />
         <motion.div
           className="problem-grid"
           variants={staggerContainer}
@@ -84,15 +81,15 @@ export function HomePage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-64px 0px" }}
         >
-          {problemCards.map(([Icon, title, text]) => (
-            <InfoCard icon={Icon} title={title} text={text} key={title} />
+          {m.home.problems.map((card, index) => (
+            <InfoCard icon={problemIcons[index]} title={card.title} text={card.body} key={card.title} />
           ))}
         </motion.div>
       </section>
 
       <section className="section solution-section">
         <Reveal>
-          <h2>ZAD solves all of this</h2>
+          <h2>{m.home.solutionTitle}</h2>
         </Reveal>
         <motion.div
           className="solution-list"
@@ -101,7 +98,7 @@ export function HomePage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-64px 0px" }}
         >
-          {solutionItems.map((item) => (
+          {m.home.solutionItems.map((item) => (
             <motion.span key={item} variants={fadeUp}>
               <Check size={16} /> {item}
             </motion.span>
@@ -110,16 +107,13 @@ export function HomePage() {
       </section>
 
       <section className="section section-gray">
-        <SectionHeader
-          title="Everything a modern restaurant needs"
-          body="Not just a QR menu — a full operating system for orders, tables, guests, and growth."
-        />
-        <FeatureGrid items={featureCards} />
+        <SectionHeader title={m.home.featuresTitle} body={m.home.featuresBody} />
+        <FeatureGrid />
       </section>
 
       <section className="mobile-only-section mobile-pricing-section">
         <Reveal>
-          <h2>Simple pricing</h2>
+          <h2>{m.home.simplePricing}</h2>
         </Reveal>
         <div className="pricing-cards">
           <PricingCard type="free" />
@@ -128,19 +122,13 @@ export function HomePage() {
       </section>
 
       <section className="section journey-section">
-        <SectionHeader
-          title="The customer journey in 9 steps"
-          body="No app needed — just scan and enjoy a seamless experience."
-        />
-        <JourneyGrid steps={journeySteps} />
+        <SectionHeader title={m.home.journeyTitle} body={m.home.journeyBody} />
+        <JourneyGrid />
       </section>
 
       <Testimonials />
       <FaqSection />
-      <FinalCta
-        title="Start your digital restaurant experience today"
-        body="Join hundreds of restaurants growing with ZAD."
-      />
+      <FinalCta title={m.home.ctaTitle} body={m.home.ctaBody} />
       <Footer />
     </PageShell>
   );

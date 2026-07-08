@@ -3,36 +3,23 @@ import { Footer, PageShell } from "../components/layout";
 import { Reveal, Stagger, StaggerItem } from "../components/motion";
 import { ComparisonTable, FinalCta, PricingCard } from "../components/sections";
 import { Badge, SectionHeader } from "../components/ui";
-
-const pricingFaqs: readonly [string, string][] = [
-  ["Is ZAD really free?", "Yes, our Free Forever plan includes basic ordering and menu features with no time limit."],
-  ["No credit card required?", "No credit card is required to sign up for the free plan. Start your restaurant immediately."],
-  ["Can I upgrade later?", "You can switch to a custom enterprise plan anytime your restaurant needs more advanced features."],
-  ["Is there a setup fee?", "There are zero setup fees for ZAD. Our self-serve dashboard lets you go live in minutes."],
-  ["Does free include QR ordering?", "Absolutely. Every ZAD user gets a high-speed QR menu and table ordering out of the box."],
-  ["Support multi-branch?", "Multi-branch and central kitchen management are available on our Custom System plan."],
-  ["How is Custom priced?", "Custom pricing depends on branch count, integrations, and development requirements."],
-  ["What if I outgrow free?", "Contact our sales team for a quote that matches your restaurant scale and complexity."]
-];
+import { useI18n } from "../i18n";
 
 export function PricingPage() {
+  const { m } = useI18n();
   return (
     <PageShell>
       <section className="hero pricing-hero">
         <Reveal className="hero-copy">
-          <Badge>Pricing</Badge>
-          <h1>Simple, honest pricing</h1>
-          <p>Start free. No credit card. No setup fee.</p>
+          <Badge>{m.pricing.badge}</Badge>
+          <h1>{m.pricing.title}</h1>
+          <p>{m.pricing.sub}</p>
           <div className="hero-proof">
-            <span>
-              <Check size={14} /> Free forever
-            </span>
-            <span>
-              <Check size={14} /> No hidden fees
-            </span>
-            <span>
-              <Check size={14} /> Cancel anytime
-            </span>
+            {m.pricing.proof.map((item) => (
+              <span key={item}>
+                <Check size={14} /> {item}
+              </span>
+            ))}
           </div>
         </Reveal>
       </section>
@@ -47,27 +34,23 @@ export function PricingPage() {
         </Stagger>
       </section>
       <section className="section compare-section">
-        <SectionHeader title="Compare plans in detail" />
+        <SectionHeader title={m.pricing.compareTitle} />
         <ComparisonTable />
       </section>
       <section className="section section-gray pricing-faq">
-        <SectionHeader title="Pricing questions answered" />
+        <SectionHeader title={m.pricing.faqTitle} />
         <Stagger className="pricing-faq-grid">
-          {pricingFaqs.map(([question, answer]) => (
-            <StaggerItem key={question}>
+          {m.pricing.faqs.map((faq) => (
+            <StaggerItem key={faq.q}>
               <article>
-                <h3>{question}</h3>
-                <p>{answer}</p>
+                <h3>{faq.q}</h3>
+                <p>{faq.a}</p>
               </article>
             </StaggerItem>
           ))}
         </Stagger>
       </section>
-      <FinalCta
-        title="Start your free restaurant today"
-        body="No credit card. No setup fee. Join 20k+ global operators."
-        secondary="Contact Sales"
-      />
+      <FinalCta title={m.pricing.ctaTitle} body={m.pricing.ctaBody} secondary={m.common.contactSales} />
       <Footer />
     </PageShell>
   );

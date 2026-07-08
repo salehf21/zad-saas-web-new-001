@@ -14,47 +14,40 @@ import {
   Users
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useI18n } from "../i18n";
 import { EASE, CountUp, Stagger, StaggerItem } from "./motion";
 import { Logo } from "./ui";
 
-const sidebarItems: readonly [LucideIcon, string, boolean][] = [
-  [LayoutDashboard, "Dashboard", true],
-  [ClipboardList, "Orders", false],
-  [Users, "Customers", false],
-  [Star, "Loyalty", false],
-  [BarChart3, "Analytics", false],
-  [Settings, "Settings", false]
-];
+const sidebarIcons: readonly LucideIcon[] = [LayoutDashboard, ClipboardList, Users, Star, BarChart3, Settings];
 
-export function DashboardMockup({
-  compact = false,
-  title = "Dashboard Overview"
-}: {
-  compact?: boolean;
-  title?: string;
-}) {
+export function DashboardMockup({ compact = false, title }: { compact?: boolean; title?: string }) {
+  const { m } = useI18n();
+  const heading = title ?? m.mockups.dashboardOverview;
   const rows = [
-    ["#0048", "Saleh Al-Omari", "NEW", "18.50"],
-    ["#0047", "Lina Haddad", "PREPARING", "18.50"],
-    ["#0046", "Ahmad Zaid", "READY", "18.50"]
-  ];
+    ["#0048", m.mockups.customerNames[0], m.mockups.statusNew, "new", "18.50"],
+    ["#0047", m.mockups.customerNames[1], m.mockups.statusPreparing, "preparing", "18.50"],
+    ["#0046", m.mockups.customerNames[2], m.mockups.statusReady, "ready", "18.50"]
+  ] as const;
 
   return (
     <div className={`dashboard-mockup ${compact ? "dashboard-compact" : ""}`}>
       <aside className="dashboard-sidebar">
         <Logo variant="english" compact dark />
         <nav>
-          {sidebarItems.map(([Icon, item, active]) => (
-            <span className={active ? "active" : ""} key={item}>
-              <Icon size={18} /> {item}
-            </span>
-          ))}
+          {m.mockups.sidebar.map((item, index) => {
+            const Icon = sidebarIcons[index];
+            return (
+              <span className={index === 0 ? "active" : ""} key={item}>
+                <Icon size={18} /> {item}
+              </span>
+            );
+          })}
         </nav>
-        <small>Powered by ZAD v1.0</small>
+        <small>{m.mockups.poweredBy}</small>
       </aside>
       <div className="dashboard-main">
         <div className="dashboard-topbar">
-          <strong>{title}</strong>
+          <strong>{heading}</strong>
           <div>
             <Search size={20} />
             <Bell size={20} />
@@ -63,19 +56,19 @@ export function DashboardMockup({
         </div>
         <div className="dashboard-content">
           <Stagger className="metric-row">
-            <Metric label="Orders Today" value={compact ? "247" : "128"} color="red" animated />
-            <Metric label="Active Tables" value={compact ? "12" : "14"} color="blue" animated />
-            <Metric label="Reservations" value="8" color="violet" animated />
-            <Metric label="Revenue" value={compact ? "$3,420" : "$4,240"} color="green" animated />
+            <Metric label={m.mockups.ordersToday} value={compact ? "247" : "128"} color="red" animated />
+            <Metric label={m.mockups.activeTables} value={compact ? "12" : "14"} color="blue" animated />
+            <Metric label={m.mockups.reservations} value="8" color="violet" animated />
+            <Metric label={m.mockups.revenue} value={compact ? "$3,420" : "$4,240"} color="green" animated />
           </Stagger>
           <div className="orders-table">
             <div className="table-head">
-              <span>Order #</span>
-              <span>Customer</span>
-              <span>Status</span>
-              <span>Total</span>
+              <span>{m.mockups.orderNo}</span>
+              <span>{m.mockups.customer}</span>
+              <span>{m.mockups.status}</span>
+              <span>{m.mockups.total}</span>
             </div>
-            {rows.map(([id, name, status, total], index) => (
+            {rows.map(([id, name, statusLabel, statusClass, total], index) => (
               <motion.div
                 className="table-row"
                 key={id}
@@ -86,7 +79,7 @@ export function DashboardMockup({
               >
                 <strong>{id}</strong>
                 <span>{name}</span>
-                <em className={`status status-${status.toLowerCase()}`}>{status}</em>
+                <em className={`status status-${statusClass}`}>{statusLabel}</em>
                 <strong>{total}</strong>
               </motion.div>
             ))}
@@ -98,9 +91,10 @@ export function DashboardMockup({
 }
 
 export function HeroNotifications() {
+  const { m } = useI18n();
   const chips: readonly [LucideIcon, string, string, number][] = [
-    [ShoppingCart, "New order", "Table 12 · 3 items", 0.9],
-    [Bell, "Waiter call", "Table 04 needs service", 1.4]
+    [ShoppingCart, m.mockups.notifNewOrderTitle, m.mockups.notifNewOrderBody, 0.9],
+    [Bell, m.mockups.notifWaiterTitle, m.mockups.notifWaiterBody, 1.4]
   ];
   return (
     <div className="hero-notifications" aria-hidden="true">
@@ -139,9 +133,7 @@ export function Metric({
   const content = (
     <>
       <span>{label}</span>
-      <strong className={`metric-${color}`}>
-        {animated ? <CountUp value={value} /> : value}
-      </strong>
+      <strong className={`metric-${color}`}>{animated ? <CountUp value={value} /> : value}</strong>
     </>
   );
   return animated ? (
@@ -152,20 +144,24 @@ export function Metric({
 }
 
 export function KitchenPanel() {
+  const { m } = useI18n();
   return (
     <div className="mock-panel kitchen-panel">
       <div className="pill-tabs">
-        <span>All</span>
-        <span>Pending</span>
-        <span className="active">Active</span>
-        <span>Ready</span>
+        {m.mockups.kitchenTabs.map((tab, index) => (
+          <span className={index === 2 ? "active" : ""} key={tab}>
+            {tab}
+          </span>
+        ))}
       </div>
       {["#0042", "#0041", "#0040", "#0039"].map((id, index) => (
         <div className="order-card" key={id}>
           <strong>{id}</strong>
-          <span>{index + 2} items · Table T-{index + 5}</span>
+          <span>
+            {index + 2} {m.mockups.itemsWord} · {m.mockups.tableWord} T-{index + 5}
+          </span>
           <em className={index % 2 ? "status status-preparing" : "status status-ready"}>
-            {index % 2 ? "PENDING" : "ACTIVE"}
+            {index % 2 ? m.mockups.statusPending : m.mockups.statusActive}
           </em>
         </div>
       ))}
@@ -174,22 +170,24 @@ export function KitchenPanel() {
 }
 
 export function ReservationPanel() {
+  const { m } = useI18n();
+  const bookings = [
+    ["7:00 PM", m.mockups.guestNames[0], true],
+    ["7:30 PM", m.mockups.guestNames[1], false],
+    ["8:00 PM", m.mockups.guestNames[2], true]
+  ] as const;
   return (
     <div className="mock-panel reservation-panel">
       <div className="panel-title">
-        <strong>Tonight · Jul 6</strong>
-        <span>+ New Booking</span>
+        <strong>{m.mockups.tonight}</strong>
+        <span>{m.mockups.newBooking}</span>
       </div>
-      {[
-        ["7:00 PM", "Ahmed Al-Rashid", "CONFIRMED"],
-        ["7:30 PM", "Sara Ibrahim", "PENDING"],
-        ["8:00 PM", "Marco Rossi", "CONFIRMED"]
-      ].map(([time, name, status]) => (
+      {bookings.map(([time, name, confirmed]) => (
         <div className="booking-card" key={name}>
           <strong>{time}</strong>
           <span>{name}</span>
-          <em className={status === "PENDING" ? "status status-preparing" : "status status-ready"}>
-            {status}
+          <em className={confirmed ? "status status-ready" : "status status-preparing"}>
+            {confirmed ? m.mockups.statusConfirmed : m.mockups.statusPending}
           </em>
         </div>
       ))}
@@ -198,7 +196,14 @@ export function ReservationPanel() {
 }
 
 export function TableMap() {
-  const states = [
+  const { m } = useI18n();
+  const stateLabels = {
+    available: m.mockups.tableAvailable,
+    occupied: m.mockups.tableOccupied,
+    reserved: m.mockups.tableReserved,
+    unavailable: m.mockups.tableUnavailable
+  } as const;
+  const states: readonly (keyof typeof stateLabels)[] = [
     "available",
     "occupied",
     "reserved",
@@ -217,7 +222,7 @@ export function TableMap() {
       {states.map((state, index) => (
         <StaggerItem className={`table-cell ${state}`} key={`${state}-${index}`}>
           <strong>{index + 1}</strong>
-          <small>{state}</small>
+          <small>{stateLabels[state]}</small>
         </StaggerItem>
       ))}
     </Stagger>
@@ -225,21 +230,26 @@ export function TableMap() {
 }
 
 export function MenuBuilder() {
+  const { m } = useI18n();
   return (
     <div className="mock-panel menu-builder">
       <div className="menu-tabs">
-        <span>Starters</span>
-        <span className="active">Mains</span>
-        <span>Desserts</span>
-        <span>Drinks</span>
+        {m.mockups.menuTabs.map((tab, index) => (
+          <span className={index === 1 ? "active" : ""} key={tab}>
+            {tab}
+          </span>
+        ))}
       </div>
-      {["Classic Cheese Burger", "Swiss Mushroom Burger", "Spicy Zinger Meal"].map((item, index) => (
+      {m.mockups.menuItems.map((item, index) => (
         <div className="menu-item-row" key={item}>
           <div>
             <strong>{item}</strong>
             <span>{index === 0 ? "$6.00" : index === 1 ? "$5.00" : "$7.00"}</span>
           </div>
-          <button className={index === 2 ? "" : "active"} aria-label={`${item} availability`} />
+          <button
+            className={index === 2 ? "" : "active"}
+            aria-label={`${item} ${m.mockups.availabilityAria}`}
+          />
         </div>
       ))}
     </div>
@@ -247,17 +257,18 @@ export function MenuBuilder() {
 }
 
 export function AnalyticsPanel() {
+  const { m } = useI18n();
   return (
     <div className="analytics-panel">
       <Stagger className="metric-row">
-        <Metric label="Revenue" value="$28,400" color="dark" animated />
-        <Metric label="Orders" value="1,247" color="dark" animated />
-        <Metric label="Avg Check" value="$22.80" color="dark" animated />
-        <Metric label="New Customers" value="89" color="dark" animated />
+        <Metric label={m.mockups.revenue} value="$28,400" color="dark" animated />
+        <Metric label={m.mockups.sidebar[1]} value="1,247" color="dark" animated />
+        <Metric label={m.mockups.avgCheck} value="$22.80" color="dark" animated />
+        <Metric label={m.mockups.newCustomers} value="89" color="dark" animated />
       </Stagger>
       <div className="chart-and-list">
         <div className="chart-box">
-          <strong>Weekly Revenue</strong>
+          <strong>{m.mockups.weeklyRevenue}</strong>
           <div className="bar-chart">
             {[46, 64, 56, 82, 92, 70, 84].map((height, index) => (
               <motion.span
@@ -271,8 +282,8 @@ export function AnalyticsPanel() {
           </div>
         </div>
         <div className="top-items">
-          <strong>Top Selling Items</strong>
-          {["Chicken Shawarma", "Beef Burger", "Caesar Salad"].map((item, index) => (
+          <strong>{m.mockups.topSelling}</strong>
+          {m.mockups.topItems.map((item, index) => (
             <div key={item}>
               <span>{index + 1}</span>
               <p>{item}</p>
@@ -292,13 +303,14 @@ export function PhoneMockup({
   variant: "scan" | "receipt" | "waiter";
   tilted?: boolean;
 }) {
+  const { m } = useI18n();
   return (
     <div className={`phone-mockup ${tilted ? "phone-tilted" : ""}`}>
       <div className="phone-notch" />
       {variant === "scan" ? (
         <div className="scan-screen">
-          <strong>Ready To Order?</strong>
-          <button type="button">Scan QR</button>
+          <strong>{m.mockups.readyToOrder}</strong>
+          <button type="button">{m.mockups.scanQr}</button>
           <span className="qr-frame">
             <QrCode size={78} />
             <motion.span
@@ -312,25 +324,25 @@ export function PhoneMockup({
       ) : variant === "receipt" ? (
         <div className="receipt-screen">
           <Logo variant="english" compact />
-          <h3>Digital Receipt</h3>
-          {["Burger", "Dish Bowl", "Latte", "Subtotal"].map((item, index) => (
+          <h3>{m.mockups.digitalReceipt}</h3>
+          {m.mockups.receiptItems.map((item, index) => (
             <span key={item}>
               {item}
               <em>{["$8.50", "$6.00", "$3.75", "$18.25"][index]}</em>
             </span>
           ))}
           <strong>$17.50</strong>
-          <button type="button">Send via WhatsApp</button>
+          <button type="button">{m.mockups.sendWhatsApp}</button>
         </div>
       ) : (
         <div className="waiter-screen">
           <div className="tabs">
-            <span>Appetizers</span>
-            <span>Main</span>
-            <span>Drinks</span>
+            {m.mockups.waiterTabs.map((tab) => (
+              <span key={tab}>{tab}</span>
+            ))}
           </div>
-          <p>Need help at Table 09?</p>
-          <button type="button">Call Waiter</button>
+          <p>{m.mockups.needHelp}</p>
+          <button type="button">{m.mockups.callWaiter}</button>
         </div>
       )}
     </div>
@@ -338,11 +350,7 @@ export function PhoneMockup({
 }
 
 export function ReceiptTransition() {
-  const rows: readonly [string, string][] = [
-    ["Burger", "$8.50"],
-    ["Dish Bowl", "$6.00"],
-    ["Latte", "$3.75"]
-  ];
+  const { m } = useI18n();
   return (
     <div className="receipt-transition">
       <motion.div
@@ -353,14 +361,14 @@ export function ReceiptTransition() {
         viewport={{ once: true, margin: "-96px 0px" }}
         transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
       >
-        <strong>PAPER RECEIPT</strong>
-        {rows.map(([item, price]) => (
+        <strong>{m.mockups.paperReceipt}</strong>
+        {m.mockups.receiptItems.slice(0, 3).map((item, index) => (
           <span key={item}>
             {item}
-            <em>{price}</em>
+            <em>{["$8.50", "$6.00", "$3.75"][index]}</em>
           </span>
         ))}
-        <small>Total · $17.50</small>
+        <small>{m.mockups.paperTotal}</small>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 28, scale: 0.96 }}

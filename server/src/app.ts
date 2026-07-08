@@ -23,7 +23,7 @@ function rateLimit() {
     }
     entry.count += 1;
     if (entry.count > RATE_LIMIT_MAX_POSTS) {
-      res.status(429).json({ ok: false, error: "Too many requests — please try again in a minute." });
+      res.status(429).json({ ok: false, code: "rate_limited", error: "Too many requests." });
       return;
     }
     next();
@@ -49,7 +49,7 @@ export function createApp(db: DatabaseSync, options: { serveStatic?: boolean } =
 
   // Unknown API routes get a JSON 404 instead of the SPA fallback.
   app.use("/api", (_req, res) => {
-    res.status(404).json({ ok: false, error: "Not found." });
+    res.status(404).json({ ok: false, code: "not_found", error: "Not found." });
   });
 
   if (options.serveStatic) {
@@ -74,7 +74,8 @@ export function createApp(db: DatabaseSync, options: { serveStatic?: boolean } =
     }
     res.status(status >= 400 && status < 600 ? status : 500).json({
       ok: false,
-      error: status === 400 ? "Invalid request body." : "Something went wrong on our side — please try again."
+      code: status === 400 ? "invalid_body" : "server_error",
+      error: status === 400 ? "Invalid request body." : "Internal error."
     });
   });
 

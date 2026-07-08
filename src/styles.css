@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Noto+Kufi+Arabic:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=Noto+Kufi+Arabic:wght@600;700&family=Cairo:wght@400;500;600;700;800;900&display=swap");
 
 :root {
   --red: #ff3737;
@@ -21,7 +21,10 @@
   --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.12);
   --shadow-card: 0 10px 24px rgba(17, 24, 39, 0.08);
   color: var(--black);
-  font-family: "Geist", "Inter", system-ui, sans-serif;
+  --font-body: "Geist", "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", "Geist", sans-serif;
+  --font-ui: "Inter", sans-serif;
+  font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: geometricPrecision;
 }
@@ -386,7 +389,7 @@ main {
 .about-hero h1,
 .contact-copy h1 {
   color: var(--black);
-  font-family: "Outfit", "Geist", sans-serif;
+  font-family: var(--font-display);
   font-size: 48px;
   font-weight: 800;
   letter-spacing: 0;
@@ -395,7 +398,7 @@ main {
 }
 
 .home-hero .hero-copy h1 {
-  font-family: "Geist", sans-serif;
+  font-family: var(--font-body);
   font-size: 36px;
   font-weight: 800;
   max-width: 800px;
@@ -676,7 +679,7 @@ main {
 }
 
 .dashboard-topbar strong {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 18px;
   font-weight: 700;
 }
@@ -723,14 +726,14 @@ main {
 
 .metric span {
   color: var(--soft-gray);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .metric strong {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 28px;
   font-weight: 800;
 }
@@ -760,7 +763,7 @@ main {
 .table-head {
   background: var(--cloud);
   color: var(--soft-gray);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
   min-height: 40px;
@@ -769,19 +772,19 @@ main {
 
 .table-row {
   border-top: 1px solid var(--line);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 13px;
 }
 
 .table-row strong:last-child,
 .table-head span:last-child {
-  text-align: right;
+  text-align: end;
 }
 
 .status {
   border-radius: 4px;
   display: inline-flex;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   font-style: normal;
   font-weight: 700;
@@ -829,7 +832,7 @@ main {
 .split-copy h2,
 .benefit-split h2 {
   color: var(--black);
-  font-family: "Outfit", "Geist", sans-serif;
+  font-family: var(--font-display);
   font-size: 36px;
   font-weight: 800;
   line-height: 1.12;
@@ -1076,7 +1079,7 @@ main {
   justify-content: space-between;
   min-height: 70px;
   padding: 22px 24px;
-  text-align: left;
+  text-align: start;
   width: 100%;
 }
 
@@ -1148,7 +1151,7 @@ main {
 .footer-col a,
 .footer-bottom {
   color: rgba(255, 255, 255, 0.5);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -1176,7 +1179,7 @@ main {
 
 .footer-col strong {
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-ui);
   font-size: 14px;
   margin-bottom: 8px;
 }
@@ -1661,7 +1664,7 @@ main {
 }
 
 .red-band h2 {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display);
   font-size: 44px;
   margin: 0 0 16px;
 }
@@ -1730,7 +1733,7 @@ main {
 .paper-receipt strong {
   border-bottom: 1px dashed var(--soft-gray);
   color: var(--gray);
-  font-family: "Inter", monospace;
+  font-family: var(--font-ui);
   font-size: 11px;
   letter-spacing: 2px;
   padding-bottom: 10px;
@@ -1740,7 +1743,7 @@ main {
 .paper-receipt span {
   color: var(--gray);
   display: flex;
-  font-family: "Inter", monospace;
+  font-family: var(--font-ui);
   font-size: 11px;
   justify-content: space-between;
 }
@@ -1752,7 +1755,7 @@ main {
 .paper-receipt small {
   border-top: 1px dashed var(--soft-gray);
   color: var(--muted);
-  font-family: "Inter", monospace;
+  font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
   padding-top: 10px;
@@ -1776,7 +1779,7 @@ main {
   gap: 12px;
   min-height: 56px;
   padding: 16px;
-  text-align: left;
+  text-align: start;
   transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
   width: 100%;
 }
@@ -2016,7 +2019,7 @@ main {
 .stat-card strong {
   color: var(--red);
   display: block;
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display);
   font-size: 56px;
   line-height: 1;
 }
@@ -2250,7 +2253,7 @@ main {
 }
 
 .form-success h2 {
-  font-family: "Outfit", "Geist", sans-serif;
+  font-family: var(--font-display);
   font-size: 26px;
   margin: 0;
 }
@@ -2290,7 +2293,7 @@ main {
 }
 
 .auth-title h1 {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display);
   font-size: 36px;
   margin: 0 0 8px;
 }
@@ -2366,7 +2369,7 @@ main {
 }
 
 .onboarding-side h1 {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display);
   font-size: 42px;
   margin: 0;
 }
@@ -2713,7 +2716,7 @@ main {
   }
 
   .setup-step-card {
-    text-align: left;
+    text-align: start;
   }
 
   .mobile-only-section {
@@ -2723,7 +2726,7 @@ main {
   }
 
   .mobile-pricing-section h2 {
-    font-family: "Outfit", "Geist", sans-serif;
+    font-family: var(--font-display);
     font-size: 28px;
     line-height: 1.15;
     margin: 0;
@@ -2984,5 +2987,240 @@ main {
     border-radius: 0;
     box-shadow: none;
     width: 100%;
+  }
+}
+
+/* ---------- Language popup ---------- */
+
+.lang-overlay {
+  align-items: center;
+  backdrop-filter: blur(6px);
+  background: rgba(10, 10, 10, 0.45);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+}
+
+.lang-modal {
+  background: var(--warm);
+  border-radius: 20px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 90vh;
+  max-width: 560px;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  width: 100%;
+}
+
+.lang-modal h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin: 14px 0 0;
+}
+
+.lang-modal p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.lang-close {
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--gray);
+  cursor: pointer;
+  inset-inline-end: 14px;
+  padding: 8px;
+  position: absolute;
+  top: 14px;
+  transition: color 160ms ease;
+}
+
+.lang-close:hover {
+  color: var(--charcoal);
+}
+
+.lang-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lang-option {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  position: relative;
+  text-align: start;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.lang-option:hover {
+  border-color: rgba(255, 55, 55, 0.4);
+  box-shadow: var(--shadow-card);
+}
+
+.lang-native {
+  color: var(--black);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.lang-english {
+  color: var(--soft-gray);
+  font-size: 12px;
+}
+
+.lang-option-suggested {
+  background: var(--rose);
+  border-color: var(--red);
+}
+
+.lang-suggested {
+  align-items: center;
+  background: var(--red);
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 700;
+  gap: 4px;
+  inset-inline-end: 10px;
+  padding: 3px 8px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 10px;
+}
+
+@media (max-width: 480px) {
+  .lang-modal {
+    padding: 28px 20px;
+  }
+}
+
+/* ---------- Footer language switcher ---------- */
+
+.footer-lang {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 56px;
+}
+
+.footer-lang-label {
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 8px;
+}
+
+.footer-lang-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-lang-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.footer-lang-pill:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.footer-lang-active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.footer-lang + .footer-bottom {
+  margin-top: 32px;
+}
+
+/* ---------- RTL (Arabic) ---------- */
+
+[dir="rtl"] {
+  --font-body: "Cairo", "Geist", system-ui, sans-serif;
+  --font-display: "Cairo", "Outfit", sans-serif;
+  --font-ui: "Cairo", "Inter", sans-serif;
+}
+
+[dir="rtl"] .input-toggle {
+  left: 10px;
+  right: auto;
+}
+
+[dir="rtl"] .phone-tilted {
+  margin-left: 0;
+  margin-right: -28px;
+}
+
+[dir="rtl"] .notification-chip-1 {
+  left: max(-16px, calc(50% - 566px));
+  right: auto;
+}
+
+[dir="rtl"] .notification-chip-2 {
+  left: auto;
+  right: max(-16px, calc(50% - 566px));
+}
+
+[dir="rtl"] .paper-receipt {
+  left: auto;
+  right: -8px;
+}
+
+[dir="rtl"] .receipt-transition {
+  padding-left: 0;
+  padding-right: 56px;
+}
+
+@media (max-width: 1180px) {
+  [dir="rtl"] .notification-chip-1 {
+    left: 8px;
+    right: auto;
+  }
+
+  [dir="rtl"] .notification-chip-2 {
+    left: auto;
+    right: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  [dir="rtl"] .receipt-transition {
+    padding-right: 32px;
+  }
+
+  [dir="rtl"] .paper-receipt {
+    right: -6px;
   }
 }

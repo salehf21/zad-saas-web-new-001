@@ -4,46 +4,29 @@ import { PhoneMockup, ReceiptTransition } from "../components/mockups";
 import { Floating, Reveal, Stagger, StaggerItem } from "../components/motion";
 import { BenefitList, FinalCta, SplitSection } from "../components/sections";
 import { Badge, Button, SectionHeader } from "../components/ui";
-
-const journeyCards: readonly [string, string, string][] = [
-  ["1", "Scan QR Code", "Located directly on the table for instant access."],
-  ["2", "Choose Language", "Full support for Arabic and English localization."],
-  ["3", "Enter Name & Phone", "Quick identity for personalized service."],
-  ["4", "Browse the Menu", "Visual, categorized menu with high-res images."],
-  ["5", "Add to Cart", "Modify items and add notes for the chef."],
-  ["6", "Confirm Order", "Real-time kitchen transmission for faster prep."],
-  ["7", "Pay or Request Waiter", "Digital payment or call staff with one tap."],
-  ["8", "Digital Receipt", "Instant confirmation that stays on their phone."],
-  ["9", "Play Mini Games", "Premium games to keep customers engaged."]
-];
+import { useI18n } from "../i18n";
 
 export function QrOrderingPage() {
+  const { m } = useI18n();
   return (
     <PageShell>
       <section className="qr-hero">
         <Reveal className="qr-hero-copy">
-          <Badge>No app required</Badge>
-          <h1>A smoother ordering experience, straight from the table</h1>
-          <p>
-            Customers scan, browse, order, and pay — all from their phone browser. No download. No
-            friction.
-          </p>
+          <Badge>{m.qr.badge}</Badge>
+          <h1>{m.qr.title}</h1>
+          <p>{m.qr.sub}</p>
           <div className="hero-actions">
-            <Button href="#journey">See How It Works</Button>
+            <Button href="#journey">{m.qr.seeHow}</Button>
             <Button tone="white" href="/product">
-              Watch Demo
+              {m.qr.watchDemo}
             </Button>
           </div>
           <div className="hero-proof">
-            <span>
-              <Check size={14} /> No app
-            </span>
-            <span>
-              <Check size={14} /> Any smartphone
-            </span>
-            <span>
-              <Check size={14} /> Arabic & English
-            </span>
+            {m.qr.proof.map((item) => (
+              <span key={item}>
+                <Check size={14} /> {item}
+              </span>
+            ))}
           </div>
         </Reveal>
         <Reveal className="phone-cluster" delay={0.15} y={36}>
@@ -57,46 +40,39 @@ export function QrOrderingPage() {
       </section>
       <section className="red-band">
         <Reveal>
-          <h2>No app download required</h2>
-          <p>
-            Customers scan once and they are in. The entire experience runs in their browser — on
-            any smartphone, in Arabic or English.
-          </p>
+          <h2>{m.qr.bandTitle}</h2>
+          <p>{m.qr.bandBody}</p>
         </Reveal>
       </section>
       <section className="section section-gray" id="journey">
-        <SectionHeader title="The complete journey in 9 steps" />
+        <SectionHeader title={m.qr.journeyTitle} />
         <Stagger className="journey-cards">
-          {journeyCards.map(([num, title, body]) => (
-            <StaggerItem className="journey-card" key={num}>
-              <span>{num}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
+          {m.qr.journeyCards.map((card, index) => (
+            <StaggerItem className="journey-card" key={card.title}>
+              <span>{index + 1}</span>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
             </StaggerItem>
           ))}
         </Stagger>
       </section>
       <SplitSection
-        eyebrow="Waiter Call"
-        title="One tap to call your waiter"
-        body="Empower your guests to get attention when they need it without searching for staff."
+        eyebrow={m.qr.waiter.eyebrow}
+        title={m.qr.waiter.title}
+        body={m.qr.waiter.body}
         visual={<PhoneMockup variant="waiter" />}
-        bullets={[
-          "Reduces shouting and waving across the floor",
-          "Notifies staff devices instantly with table number",
-          "Improves guest satisfaction in busy hours"
-        ]}
+        bullets={m.qr.waiter.bullets}
         reverse
       />
       <section className="section section-gray receipt-section">
-        <SectionHeader eyebrow="Digital Receipt" title="Receipts that never get lost" />
+        <SectionHeader eyebrow={m.qr.receiptEyebrow} title={m.qr.receiptTitle} />
         <div className="receipt-layout">
           <Stagger className="receipt-actions">
-            {["View on phone", "Send via WhatsApp", "Download PDF"].map((item) => (
-              <StaggerItem key={item}>
+            {m.qr.receiptActions.map((action) => (
+              <StaggerItem key={action.title}>
                 <button type="button">
-                  {item}
-                  <span>Instant access to current and past orders.</span>
+                  {action.title}
+                  <span>{action.body}</span>
                 </button>
               </StaggerItem>
             ))}
@@ -105,54 +81,26 @@ export function QrOrderingPage() {
         </div>
       </section>
       <section className="section">
-        <SectionHeader
-          title="Stay entertained while your food is prepared"
-          body="Built-in mini games — a premium engagement feature that turns waiting into part of the fun."
-        />
+        <SectionHeader title={m.qr.gamesTitle} body={m.qr.gamesBody} />
         <Stagger className="mini-game-grid">
-          {[
-            ["Makes Waiting Shorter", "Transform dead time into an engaging experience."],
-            ["Loyalty Connection", "Reward high scores with loyalty points or dessert."],
-            ["Memorable Experience", "Stand out from competition with premium entertainment."]
-          ].map(([title, body]) => (
-            <StaggerItem className="game-card" key={title}>
+          {m.qr.gameCards.map((card) => (
+            <StaggerItem className="game-card" key={card.title}>
               <Gamepad2 size={48} />
-              <h3>{title}</h3>
-              <p>{body}</p>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
             </StaggerItem>
           ))}
         </Stagger>
       </section>
       <section className="benefit-split">
         <div>
-          <BenefitList
-            title="For Restaurants"
-            items={[
-              "Lightning fast ordering",
-              "Reduced labor costs",
-              "Automatic upsells",
-              "Visual menu upsells",
-              "Detailed analytics"
-            ]}
-          />
+          <BenefitList title={m.qr.forRestaurantsTitle} items={m.qr.forRestaurants} />
         </div>
         <div>
-          <BenefitList
-            title="For Customers"
-            items={[
-              "No app to download",
-              "Arabic & English support",
-              "Call waiter in one tap",
-              "Digital payment options",
-              "Built-in mini games"
-            ]}
-          />
+          <BenefitList title={m.qr.forCustomersTitle} items={m.qr.forCustomers} />
         </div>
       </section>
-      <FinalCta
-        title="Set up QR ordering for your restaurant today"
-        body="Takes less than 10 minutes to go live."
-      />
+      <FinalCta title={m.qr.ctaTitle} body={m.qr.ctaBody} />
       <Footer compact />
     </PageShell>
   );

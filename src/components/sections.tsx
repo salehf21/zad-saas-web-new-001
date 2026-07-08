@@ -3,8 +3,8 @@ import { Check, ChevronDown, Star } from "lucide-react";
 import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { customFeatures, faqs, pricingFeatures, setupSteps, testimonials } from "../data";
-import type { CardContent } from "../data";
+import { featureIcons } from "../data";
+import { useI18n } from "../i18n";
 import { EASE, Reveal, Stagger, StaggerItem } from "./motion";
 import { Badge, Button, SectionHeader } from "./ui";
 
@@ -18,30 +18,33 @@ export function InfoCard({ icon: Icon, title, text }: { icon: LucideIcon; title:
   );
 }
 
-export function FeatureGrid({ items }: { items: readonly CardContent[] }) {
+export function FeatureGrid({ range = [0, 12] }: { range?: [number, number] }) {
+  const { m } = useI18n();
+  const items = m.home.features.slice(range[0], range[1]);
+  const icons = featureIcons.slice(range[0], range[1]);
   return (
     <Stagger className="feature-grid">
-      {items.map(([Icon, title, text]) => (
-        <StaggerItem className="feature-card" key={title}>
-          <span className="feature-icon">
-            <Icon size={24} strokeWidth={1.7} />
-          </span>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </StaggerItem>
-      ))}
+      {items.map((item, index) => {
+        const Icon = icons[index];
+        return (
+          <StaggerItem className="feature-card" key={item.title}>
+            <span className="feature-icon">
+              <Icon size={24} strokeWidth={1.7} />
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </StaggerItem>
+        );
+      })}
     </Stagger>
   );
 }
 
 export function EasySetupSection() {
+  const { m } = useI18n();
   return (
     <section className="section setup-section">
-      <SectionHeader
-        eyebrow="Easy Setup"
-        title="Download. Set up. Start."
-        body="No hardware, no consultants, no waiting. Go from signup to live QR ordering in about 10 minutes."
-      />
+      <SectionHeader eyebrow={m.setup.eyebrow} title={m.setup.title} body={m.setup.body} />
       <div className="setup-steps">
         <motion.span
           className="setup-progress"
@@ -52,33 +55,34 @@ export function EasySetupSection() {
           transition={{ duration: 1.2, delay: 0.2, ease: EASE }}
         />
         <Stagger className="setup-steps-grid">
-          {setupSteps.map(([num, title, body]) => (
-            <StaggerItem className="setup-step-card" key={num}>
-              <span>{num}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
+          {m.setup.steps.map((step, index) => (
+            <StaggerItem className="setup-step-card" key={step.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
             </StaggerItem>
           ))}
         </Stagger>
       </div>
       <Reveal className="setup-cta" delay={0.2}>
         <Button href="/signup" size="lg">
-          Set Up Your Restaurant
+          {m.setup.cta}
         </Button>
-        <small>Free forever · No credit card · No app for your customers</small>
+        <small>{m.setup.ctaNote}</small>
       </Reveal>
     </section>
   );
 }
 
-export function JourneyGrid({ steps }: { steps: readonly [string, string, string][] }) {
+export function JourneyGrid() {
+  const { m } = useI18n();
   return (
     <Stagger className="journey-grid">
-      {steps.map(([num, title, body]) => (
-        <StaggerItem className="journey-step" key={num}>
-          <span>{num}</span>
-          <h3>{title}</h3>
-          <p>{body}</p>
+      {m.home.journeySteps.map((step, index) => (
+        <StaggerItem className="journey-step" key={step.title}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <h3>{step.title}</h3>
+          <p>{step.body}</p>
         </StaggerItem>
       ))}
     </Stagger>
@@ -86,20 +90,21 @@ export function JourneyGrid({ steps }: { steps: readonly [string, string, string
 }
 
 export function Testimonials() {
+  const { m } = useI18n();
   return (
     <section className="section testimonials">
-      <SectionHeader title="Trusted by restaurants" />
+      <SectionHeader title={m.home.testimonialsTitle} />
       <Stagger className="testimonial-grid">
-        {testimonials.map(([name, role, quote]) => (
-          <StaggerItem className="testimonial-card" key={name}>
+        {m.home.testimonials.map((entry) => (
+          <StaggerItem className="testimonial-card" key={entry.name}>
             <div className="stars" aria-hidden="true">
               {Array.from({ length: 5 }).map((_, index) => (
                 <Star size={18} fill="currentColor" key={index} />
               ))}
             </div>
-            <p>"{quote}"</p>
-            <strong>{name}</strong>
-            <span>{role}</span>
+            <p>"{entry.quote}"</p>
+            <strong>{entry.name}</strong>
+            <span>{entry.role}</span>
           </StaggerItem>
         ))}
       </Stagger>
@@ -108,23 +113,24 @@ export function Testimonials() {
 }
 
 export function FaqSection() {
+  const { m } = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section className="section section-gray faq-section">
-      <SectionHeader title="Frequently asked questions" />
+      <SectionHeader title={m.home.faqTitle} />
       <Stagger className="faq-grid">
-        {faqs.map(([question, answer], index) => {
+        {m.home.faqs.map((faq, index) => {
           const open = openIndex === index;
           return (
-            <StaggerItem className={`faq-item ${open ? "faq-item-open" : ""}`} key={question}>
+            <StaggerItem className={`faq-item ${open ? "faq-item-open" : ""}`} key={faq.q}>
               <button
                 type="button"
                 className="faq-question"
                 aria-expanded={open}
                 onClick={() => setOpenIndex(open ? null : index)}
               >
-                {question}
+                {faq.q}
                 <motion.span
                   className="faq-chevron"
                   animate={{ rotate: open ? 180 : 0 }}
@@ -142,7 +148,7 @@ export function FaqSection() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: EASE }}
                   >
-                    <p>{answer}</p>
+                    <p>{faq.a}</p>
                   </motion.div>
                 ) : null}
               </AnimatePresence>
@@ -157,23 +163,24 @@ export function FaqSection() {
 export function FinalCta({
   title,
   body,
-  primary = "Start for Free",
-  secondary = "Book a Demo"
+  primary,
+  secondary
 }: {
   title: string;
   body: string;
   primary?: string;
   secondary?: string;
 }) {
+  const { m } = useI18n();
   return (
     <section className="final-cta">
       <SectionHeader title={title} body={body} dark />
       <Reveal className="hero-actions" delay={0.15}>
         <Button href="/signup" size="lg">
-          {primary}
+          {primary ?? m.common.startForFree}
         </Button>
         <Button href="/contact" tone="outline" size="lg">
-          {secondary}
+          {secondary ?? m.common.bookADemo}
         </Button>
       </Reveal>
     </section>
@@ -192,7 +199,7 @@ export function SplitSection({
   title: string;
   body: string;
   visual: ReactNode;
-  bullets: string[];
+  bullets: readonly string[];
   reverse?: boolean;
 }) {
   return (
@@ -216,7 +223,7 @@ export function SplitSection({
   );
 }
 
-export function BenefitList({ title, items }: { title: string; items: string[] }) {
+export function BenefitList({ title, items }: { title: string; items: readonly string[] }) {
   return (
     <Reveal>
       <h2>{title}</h2>
@@ -232,8 +239,9 @@ export function BenefitList({ title, items }: { title: string; items: string[] }
 }
 
 export function PricingCard({ type }: { type: "free" | "custom" }) {
+  const { m } = useI18n();
   const dark = type === "custom";
-  const items = dark ? customFeatures : pricingFeatures;
+  const items = dark ? m.pricing.customFeatures : m.pricing.freeFeatures;
   return (
     <motion.article
       className={`pricing-card ${dark ? "pricing-card-dark" : ""}`}
@@ -242,22 +250,19 @@ export function PricingCard({ type }: { type: "free" | "custom" }) {
     >
       <div className="pricing-card-head">
         <div>
-          <h2>{dark ? "Custom System" : "Free Forever"}</h2>
+          <h2>{dark ? m.pricing.customName : m.pricing.freeName}</h2>
           {dark ? (
-            <strong>Contact Us</strong>
+            <strong>{m.pricing.customPrice}</strong>
           ) : (
             <strong>
-              <span>$0</span>/month
+              <span>$0</span>
+              {m.pricing.freePerMonth}
             </strong>
           )}
         </div>
-        {!dark ? <Badge>Most Popular</Badge> : <Badge dark>Enterprise</Badge>}
+        {!dark ? <Badge>{m.pricing.mostPopular}</Badge> : <Badge dark>{m.pricing.enterprise}</Badge>}
       </div>
-      <p>
-        {dark
-          ? "Enterprise solutions for multi-branch restaurants and franchise chains."
-          : "Ideal for small restaurants and food trucks starting their digital journey."}
-      </p>
+      <p>{dark ? m.pricing.customDesc : m.pricing.freeDesc}</p>
       <ul>
         {items.map((item) => (
           <li key={item}>
@@ -266,43 +271,30 @@ export function PricingCard({ type }: { type: "free" | "custom" }) {
         ))}
       </ul>
       <Button href={dark ? "/contact" : "/signup"} tone={dark ? "outline" : "red"}>
-        {dark ? "Contact Us" : "Start for Free"}
+        {dark ? m.common.contactUs : m.common.startForFree}
       </Button>
-      <small>{dark ? "Tailored to your restaurant." : "Always free. No time limit."}</small>
+      <small>{dark ? m.pricing.customNote : m.pricing.freeNote}</small>
     </motion.article>
   );
 }
 
 export function ComparisonTable() {
-  const rows = [
-    "QR Menu",
-    "Table Ordering",
-    "Menu Management",
-    "Order Dashboard",
-    "Reservations",
-    "Digital Receipts",
-    "Analytics",
-    "Custom Dashboard",
-    "Custom Branding",
-    "Multi-Branch",
-    "POS Integration",
-    "Dedicated Support"
-  ];
+  const { m } = useI18n();
   return (
     <Reveal className="comparison-wrap">
       <div className="comparison-table">
         <div className="comparison-head">
-          <span>Feature</span>
-          <span>Free Forever</span>
-          <span>Custom System</span>
+          <span>{m.pricing.compareFeature}</span>
+          <span>{m.pricing.freeName}</span>
+          <span>{m.pricing.customName}</span>
         </div>
-        {rows.map((row, index) => (
+        {m.pricing.compareRows.map((row, index) => (
           <div className="comparison-row" key={row}>
             <strong>{row}</strong>
-            <span aria-label={index > 6 ? "Not included" : "Included"}>
+            <span aria-label={index > 6 ? m.pricing.notIncluded : m.pricing.included}>
               {index > 6 ? "—" : <Check size={18} />}
             </span>
-            <span aria-label="Included">
+            <span aria-label={m.pricing.included}>
               <Check size={18} />
             </span>
           </div>

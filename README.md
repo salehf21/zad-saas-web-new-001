@@ -8,6 +8,21 @@ form submissions.
 
 - **Frontend**: Vite + React 18 + TypeScript + Framer Motion (SPA with a lightweight client-side router)
 - **Backend**: Express 5 + TypeScript in `server/`, storing data in SQLite via Node's built-in `node:sqlite` (no native dependencies)
+- **i18n**: 10 languages (English, Arabic, Spanish, Italian, French, Bulgarian, German, Dutch, Portuguese, Turkish)
+
+## Internationalization
+
+- Dictionaries live in `src/i18n/locales/*.ts` — one typed file per language. `Messages`
+  (= shape of `en.ts`) is enforced by TypeScript, so adding a language means copying
+  `en.ts`, translating the strings, and registering it in `src/i18n/index.tsx` (`LOCALES` +
+  `DICTIONARIES`). No component contains hardcoded copy.
+- First visit shows a language popup; the browser language (`navigator.languages`) picks the
+  suggested locale, falling back to English. The choice is stored in `localStorage`
+  (`zad-locale`) and never asked again. A footer switcher changes language any time.
+- Arabic renders RTL: `<html lang dir>` update dynamically, fonts swap to Cairo via CSS
+  variables, and a small `[dir="rtl"]` block mirrors the few absolutely-positioned elements.
+- Backend validation returns stable machine codes (`required`, `invalid`, `range`, …) that the
+  frontend maps to localized messages in the active language.
 
 ## Run locally
 

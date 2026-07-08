@@ -4,16 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { EASE } from "../components/motion";
 import { Button, FormErrorBanner, Input, Logo } from "../components/ui";
-import { ApiError, postJson } from "../lib/api";
-import type { FieldErrors } from "../lib/api";
+import { useI18n } from "../i18n";
+import { ApiError, bannerMessage, fieldMessage, postJson } from "../lib/api";
 import { Link, useRouter } from "../router";
 
 export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const { navigate } = useRouter();
+  const { m } = useI18n();
   const [sending, setSending] = useState(false);
   const [resetSent, setResetSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [apiError, setApiError] = useState<ApiError | null>(null);
   const timer = useRef<number>();
   const isSignup = mode === "signup";
   const isForgot = mode === "forgot";
@@ -26,8 +26,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setError(null);
-    setFieldErrors({});
+    setApiError(null);
     setSending(true);
 
     if (isSignup) {
@@ -42,12 +41,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
         navigate("/onboarding");
       } catch (err) {
         setSending(false);
-        if (err instanceof ApiError) {
-          setError(err.message);
-          setFieldErrors(err.fieldErrors ?? {});
-        } else {
-          setError("Something went wrong — please try again.");
-        }
+        setApiError(err instanceof ApiError ? err : new ApiError("generic"));
       }
       return;
     }
@@ -66,7 +60,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
     <main className="auth-page">
       <section className="auth-mobile-brand">
         <Logo />
-        <span>{isSignup ? "Free Forever" : "Restaurant OS"}</span>
+        <span>{isSignup ? m.auth.brandFree : m.auth.brandOs}</span>
       </section>
       <motion.article
         className="auth-card"
@@ -76,14 +70,8 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
       >
         <Logo />
         <div className="auth-title">
-          <h1>{isSignup ? "Create your account." : isForgot ? "Reset password." : "Welcome back."}</h1>
-          <p>
-            {isSignup
-              ? "Request your free restaurant workspace — our team activates it right away."
-              : isForgot
-                ? "We will send reset instructions."
-                : "Sign in to your dashboard."}
-          </p>
+          <h1>{isSignup ? m.auth.signupTitle : isForgot ? m.auth.forgotTitle : m.auth.loginTitle}</h1>
+          <p>{isSignup ? m.auth.signupSub : isForgot ? m.auth.forgotSub : m.auth.loginSub}</p>
         </div>
         {isForgot && resetSent ? (
           <motion.div
@@ -99,59 +87,71 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
             >
               <CheckCircle2 size={48} />
             </motion.span>
-            <h2>Check your inbox</h2>
-            <p>If an account exists for that email, reset instructions are on the way.</p>
+            <h2>{m.auth.resetSentTitle}</h2>
+            <p>{m.auth.resetSentBody}</p>
           </motion.div>
         ) : (
           <form className="auth-form" onSubmit={handleSubmit}>
-            {error ? <FormErrorBanner message={error} /> : null}
+            {apiError ? <FormErrorBanner message={bannerMessage(apiError, m)} /> : null}
             {isSignup ? (
-              <Input label="Full Name" placeholder="Your full name" name="name" required error={fieldErrors.name} />
+              <Input
+                label={m.auth.fullNameLabel}
+                placeholder={m.auth.fullNamePlaceholder}
+                name="name"
+                required
+                error={fieldMessage("name", apiError, m)}
+              />
             ) : null}
             <Input
-              label="Email address"
-              placeholder="Email address"
+              label={m.auth.emailLabel}
+              placeholder={m.auth.emailPlaceholder}
               type="email"
               name="email"
               required
-              error={fieldErrors.email}
+              error={fieldMessage("email", apiError, m)}
             />
             {isSignup ? (
               <Input
-                label="Restaurant name"
-                placeholder="Restaurant or cafe"
+                label={m.auth.restaurantLabel}
+                placeholder={m.auth.restaurantPlaceholder}
                 name="restaurant"
                 required
-                error={fieldErrors.restaurant}
+                error={fieldMessage("restaurant", apiError, m)}
               />
             ) : null}
             {!isSignup && !isForgot ? (
-              <Input label="Password" placeholder="Password" type="password" name="password" required />
+              <Input
+                label={m.auth.passwordLabel}
+                placeholder={m.auth.passwordPlaceholder}
+                type="password"
+                name="password"
+                required
+              />
             ) : null}
             {!isSignup && !isForgot ? (
               <div className="auth-options">
                 <label>
-                  <input type="checkbox" /> Remember me
+                  <input type="checkbox" /> {m.auth.rememberMe}
                 </label>
-                <Link href="/forgot-password">Forgot password?</Link>
+                <Link href="/forgot-password">{m.auth.forgotPassword}</Link>
               </div>
             ) : null}
             {isSignup ? (
               <label className="terms">
-                <input type="checkbox" required /> I agree to Terms and Privacy Policy
+                <input type="checkbox" required /> {m.auth.terms}
               </label>
             ) : null}
             <Button type="submit" size="lg" disabled={sending}>
               {sending ? (
                 <>
-                  <Loader2 size={18} className="spin" /> Please wait…
+                  <Loader2 size={18} className="spin" /> {m.common.pleaseWait}
                 </>
               ) : isSignup ? (
-                "Create Account"
+                m.auth.createAccount
               ) : isForgot ? (
-                "Send Reset Link"
+                m.auth.sendResetLink
               ) : (
-                "Sign In"
+                m.auth.signIn
               )}
             </Button>
           </form>
@@ -160,21 +160,23 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
           <>
             <div className="divider">
               <span />
-              or
+              {m.auth.or}
               <span />
             </div>
             <Button href="/onboarding" tone="white" size="lg">
-              <Globe2 size={20} /> Continue with Google
+              <Globe2 size={20} /> {m.auth.google}
             </Button>
           </>
         ) : (
           <Link className="back-link" href="/login">
-            <ArrowLeft size={16} /> Back to Sign In
+            <ArrowLeft size={16} /> {m.auth.backToSignIn}
           </Link>
         )}
         <p className="auth-footer">
-          {isSignup ? "Already have an account? " : "No account? "}
-          <Link href={isSignup ? "/login" : "/signup"}>{isSignup ? "Sign In" : "Start for Free"}</Link>
+          {isSignup ? m.auth.haveAccount : m.auth.noAccount}
+          <Link href={isSignup ? "/login" : "/signup"}>
+            {isSignup ? m.auth.signIn : m.common.startForFree}
+          </Link>
         </p>
       </motion.article>
     </main>
