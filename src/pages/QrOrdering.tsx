@@ -1,6 +1,6 @@
 import { Check, Gamepad2 } from "lucide-react";
 import { Footer, PageShell } from "../components/layout";
-import { PhoneMockup } from "../components/mockups";
+import { PhoneMockup, ReceiptTransition } from "../components/mockups";
 import { Floating, Reveal, Stagger, StaggerItem } from "../components/motion";
 import { BenefitList, FinalCta, SplitSection } from "../components/sections";
 import { Badge, Button, SectionHeader } from "../components/ui";
@@ -101,9 +101,7 @@ export function QrOrderingPage() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal delay={0.1} y={32}>
-            <PhoneMockup variant="receipt" />
-          </Reveal>
+          <ReceiptTransition />
         </div>
       </section>
       <section className="section">

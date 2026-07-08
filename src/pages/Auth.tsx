@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle2, Globe2 } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, CheckCircle2, Globe2, Loader2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { EASE } from "../components/motion";
 import { Button, Input, Logo } from "../components/ui";
@@ -8,19 +8,27 @@ import { Link, useRouter } from "../router";
 
 export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const { navigate } = useRouter();
+  const [sending, setSending] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const timer = useRef<number>();
   const isSignup = mode === "signup";
   const isForgot = mode === "forgot";
 
-  // TODO: connect to a real authentication backend when one is available.
-  // For now the demo flow continues into the visual onboarding.
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  // Frontend-only demo: no real authentication. A short simulated "loading"
+  // state leads into the static onboarding flow (or the reset confirmation).
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isForgot) {
-      setResetSent(true);
-    } else {
-      navigate("/onboarding");
-    }
+    setSending(true);
+    timer.current = window.setTimeout(() => {
+      if (isForgot) {
+        setSending(false);
+        setResetSent(true);
+      } else {
+        navigate("/onboarding");
+      }
+    }, 900);
   };
 
   return (
@@ -86,8 +94,18 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
                 <input type="checkbox" required /> I agree to Terms and Privacy Policy
               </label>
             ) : null}
-            <Button type="submit" size="lg">
-              {isSignup ? "Create Account" : isForgot ? "Send Reset Link" : "Sign In"}
+            <Button type="submit" size="lg" disabled={sending}>
+              {sending ? (
+                <>
+                  <Loader2 size={18} className="spin" /> Please wait…
+                </>
+              ) : isSignup ? (
+                "Create Account"
+              ) : isForgot ? (
+                "Send Reset Link"
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
         )}

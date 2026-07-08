@@ -1,19 +1,25 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Footer, PageShell } from "../components/layout";
 import { EASE, Reveal } from "../components/motion";
 import { FinalCta } from "../components/sections";
 import { Badge, Button, Input } from "../components/ui";
 
-export function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
+type FormState = "idle" | "sending" | "sent";
 
-  // TODO: wire to a real backend / email service when one is available.
+export function ContactPage() {
+  const [state, setState] = useState<FormState>("idle");
+  const timer = useRef<number>();
+
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  // Frontend-only: simulate a short send, then show the static success state.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    setState("sending");
+    timer.current = window.setTimeout(() => setState("sent"), 900);
   };
 
   return (
@@ -40,7 +46,7 @@ export function ContactPage() {
         </Reveal>
         <Reveal delay={0.1} y={32}>
           <AnimatePresence mode="wait" initial={false}>
-            {submitted ? (
+            {state === "sent" ? (
               <motion.div
                 className="contact-form form-success"
                 key="success"
@@ -50,8 +56,8 @@ export function ContactPage() {
               >
                 <CheckCircle2 size={48} />
                 <h2>Message sent</h2>
-                <p>Thanks for reaching out — the ZAD team will get back to you within one business day.</p>
-                <Button onClick={() => setSubmitted(false)} tone="white">
+                <p>Thanks — our team will contact you soon.</p>
+                <Button onClick={() => setState("idle")} tone="white">
                   Send another message
                 </Button>
               </motion.div>
@@ -70,8 +76,14 @@ export function ContactPage() {
                   Message
                   <textarea placeholder="Tell us about your restaurant" name="message" required />
                 </label>
-                <Button type="submit" size="lg">
-                  Send Message
+                <Button type="submit" size="lg" disabled={state === "sending"}>
+                  {state === "sending" ? (
+                    <>
+                      <Loader2 size={18} className="spin" /> Sending…
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </Button>
               </motion.form>
             )}

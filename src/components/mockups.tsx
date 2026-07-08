@@ -337,6 +337,43 @@ export function PhoneMockup({
   );
 }
 
+export function ReceiptTransition() {
+  const rows: readonly [string, string][] = [
+    ["Burger", "$8.50"],
+    ["Dish Bowl", "$6.00"],
+    ["Latte", "$3.75"]
+  ];
+  return (
+    <div className="receipt-transition">
+      <motion.div
+        className="paper-receipt"
+        aria-hidden="true"
+        initial={{ opacity: 1, x: 26, rotate: 0 }}
+        whileInView={{ opacity: 0.45, x: -58, rotate: -8 }}
+        viewport={{ once: true, margin: "-96px 0px" }}
+        transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
+      >
+        <strong>PAPER RECEIPT</strong>
+        {rows.map(([item, price]) => (
+          <span key={item}>
+            {item}
+            <em>{price}</em>
+          </span>
+        ))}
+        <small>Total · $17.50</small>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 28, scale: 0.96 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-96px 0px" }}
+        transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
+      >
+        <PhoneMockup variant="receipt" />
+      </motion.div>
+    </div>
+  );
+}
+
 export function MissionGraphic() {
   return (
     <div className="mission-graphic">
